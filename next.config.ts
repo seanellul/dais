@@ -22,6 +22,13 @@ const nextConfig: NextConfig = {
   typedRoutes: true,
   // Keep the installed judge app inside its /j/ service-worker scope.
   skipTrailingSlashRedirect: true,
+  // PDFKit loads its standard fonts by name at runtime, beyond static tracing.
+  outputFileTracingIncludes: {
+    "/api/t/*/export/*": [
+      "./node_modules/pdfkit/js/standard-fonts/**/*",
+      "./node_modules/.pnpm/pdfkit@*/node_modules/pdfkit/js/standard-fonts/**/*",
+    ],
+  },
   async headers() {
     return [
       {
