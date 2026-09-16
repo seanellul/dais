@@ -1,4 +1,5 @@
 import { SiteFooter, SiteHeader } from "./site-chrome";
+import { AppThemeProvider } from "@/ui/app-theme-provider";
 
 /**
  * The public site (landing page, design gallery). It owns the page's
@@ -9,12 +10,12 @@ import { SiteFooter, SiteHeader } from "./site-chrome";
  */
 export default function MarketingLayout({ children }: LayoutProps<"/">) {
   return (
-    <>
+    <AppThemeProvider>
       <SiteHeader />
       <main id="main" tabIndex={-1} className="flex flex-1 flex-col outline-none">
         {children}
       </main>
       <SiteFooter />
-    </>
+    </AppThemeProvider>
   );
 }

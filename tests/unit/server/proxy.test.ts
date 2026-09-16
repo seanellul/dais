@@ -34,7 +34,7 @@ describe("securityHeaders", () => {
   it("sets the fixed headers in every environment", () => {
     for (const headers of [production, development]) {
       expect(headers["X-Content-Type-Options"]).toBe("nosniff");
-      expect(headers["Referrer-Policy"]).toBe("no-referrer");
+      expect(headers["Referrer-Policy"]).toBe("strict-origin");
       expect(headers["X-Frame-Options"]).toBe("DENY");
       expect(headers["Permissions-Policy"]).toContain("camera=(self)");
       expect(headers["Permissions-Policy"]).toContain("microphone=()");
@@ -78,6 +78,36 @@ describe("securityHeaders", () => {
 });
 
 describe("proxy", () => {
+  it("redirects only the slashless judge URL and preserves join parameters", () => {
+    const response = proxy(new NextRequest("http://localhost/j?sample=1"));
+    expect(response.status).toBe(308);
+    const target = new URL(response.headers.get("location")!);
+    expect(target.pathname).toBe("/j/");
+    expect(target.search).toBe("?sample=1");
+    expect(proxy(new NextRequest("http://localhost/j/")).headers.get("location")).toBeNull();
+    expect(
+      proxy(new NextRequest("http://localhost/j/join?t=sample")).headers.get("location"),
+    ).toBeNull();
+  });
+  it("renews the organiser browser cookie on organiser requests without making it readable to scripts", () => {
+    const token = "a".repeat(43);
+    const response = proxy(
+      new NextRequest("https://dais.example/t/demo", {
+        headers: { cookie: `dais.org=${token}` },
+      }),
+    );
+    const cookie = response.cookies.get("dais.org");
+    expect(cookie).toMatchObject({
+      value: token,
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      maxAge: 2592000,
+    });
+    expect(response.headers.get("Cache-Control")).toBe("private, no-store");
+    expect(proxy(new NextRequest("https://dais.example/")).cookies.get("dais.org")).toBeUndefined();
+  });
+
   it("keeps a safe client request id, forwards it and echoes it", () => {
     const request = new NextRequest("http://localhost/api/health", {
       headers: { [REQUEST_ID_HEADER]: "client-1" },

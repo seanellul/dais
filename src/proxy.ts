@@ -10,14 +10,9 @@
  * handler checks the session itself, because a matcher change here would
  * otherwise silently remove protection.
  *
- * CSP status (see the hardening milestone, M7): Next.js hydrates pages with
- * inline scripts, so without nonces or hashes `script-src` must allow
- * 'unsafe-inline' in production as well as in development. Development
- * additionally needs 'unsafe-eval' for Turbopack. The plan is a nonce-based
- * policy for organiser routes (generated here, read in the root layout) and a
- * hash-based policy for the static judge app at /j, whose service worker
- * precache cannot carry per-request nonces. Until then this file ships one
- * policy that works everywhere.
+ * Production dynamic pages receive a per-request nonce. Immutable pages use
+ * exact inline-script hashes installed by scripts/static-csp.mjs after build,
+ * so the judge shell can be safely precached and reopened offline.
  */
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -30,15 +25,15 @@ const HSTS_MAX_AGE_SECONDS = 63_072_000;
 
 interface HeaderOptions {
   production: boolean;
+  nonce?: string;
 }
 
 /** The CSP directives as data, so the policy is easy to read and to test. */
-function cspDirectives({ production }: HeaderOptions): Record<string, string[]> {
+function cspDirectives({ production, nonce }: HeaderOptions): Record<string, string[]> {
   return {
     "default-src": ["'self'"],
-    // 'unsafe-inline' is required by Next's hydration scripts until nonces land.
     "script-src": production
-      ? ["'self'", "'unsafe-inline'"]
+      ? ["'self'", ...(nonce ? [`'nonce-${nonce}'`] : [])]
       : ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
     // Tailwind and shadcn/base-ui set inline style attributes.
     "style-src": ["'self'", "'unsafe-inline'"],
@@ -64,6 +59,15 @@ function serialiseCsp(directives: Record<string, string[]>): string {
     .join("; ");
 }
 
+/** Replaced in compiled proxy output after immutable HTML has been generated. */
+function staticCspFor(pathname: string): string | undefined {
+  try {
+    return (JSON.parse("__DAIS_STATIC_CSP__") as Record<string, string>)[pathname];
+  } catch {
+    return undefined; // Development does not run the production post-build step.
+  }
+}
+
 /**
  * The full set of security headers for one response. Exported so a unit test
  * can assert the policy without running Next.
@@ -72,7 +76,9 @@ export function securityHeaders(options: HeaderOptions): Record<string, string> 
   const headers: Record<string, string> = {
     "Content-Security-Policy": serialiseCsp(cspDirectives(options)),
     "X-Content-Type-Options": "nosniff",
-    "Referrer-Policy": "no-referrer",
+    // Preserve the origin on native POST forms, while never disclosing join
+    // token paths/queries to another request (even on the same origin).
+    "Referrer-Policy": "strict-origin",
     "X-Frame-Options": "DENY",
     // The camera is needed on the organiser's device to scan hand-off QR codes.
     // Only features browsers still recognise are listed; an unknown one (such
@@ -95,12 +101,54 @@ export function proxy(request: NextRequest): NextResponse {
   // Forward the id to the page or handler so its logs and errors share it.
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set(REQUEST_ID_HEADER, requestId);
-  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  const pathname = new URL(request.url).pathname.replace(/\/$/, "") || "/";
+  // Immutable build output: post-build injects its exact inline-script hashes
+  // into this proxy, so all deployment adapters preserve the response header.
+  const staticPage = ["/", "/j", "/j/join", "/design", "/demo/judge"].includes(pathname);
+  const nonce =
+    IS_PRODUCTION && !staticPage ? Buffer.from(crypto.randomUUID()).toString("base64") : undefined;
+  const responseHeaders = securityHeaders({ production: IS_PRODUCTION, nonce });
+  if (IS_PRODUCTION && staticPage) {
+    responseHeaders["Content-Security-Policy"] =
+      staticCspFor(pathname) ?? "default-src 'none'; frame-ancestors 'none'";
+  }
+  if (nonce) {
+    requestHeaders.set("x-nonce", nonce);
+    requestHeaders.set("Content-Security-Policy", responseHeaders["Content-Security-Policy"]);
+  }
+  // Next's redirect matcher makes a trailing slash optional, so a config
+  // redirect for /j would also redirect /j/ to itself. Match the raw path.
+  const response =
+    new URL(request.url).pathname === "/j"
+      ? NextResponse.redirect(
+          new URL("/j/" + new URL(request.url).search, process.env.APP_URL || request.url),
+          308,
+        )
+      : NextResponse.next({ request: { headers: requestHeaders } });
 
-  for (const [name, value] of Object.entries(securityHeaders({ production: IS_PRODUCTION }))) {
+  for (const [name, value] of Object.entries(responseHeaders)) {
     response.headers.set(name, value);
   }
   response.headers.set(REQUEST_ID_HEADER, requestId);
+  if (nonce) response.headers.set("Cache-Control", "private, no-store");
+  // Keep browser retention in step with the database's sliding expiry.
+  // The protected page/action still validates expiry and revocation; echoing
+  // an expired token here never grants access or extends its database row.
+  const organiserToken = request.cookies.get("dais.org")?.value;
+  if (
+    /^\/t(?:\/|$)/.test(request.nextUrl.pathname) &&
+    organiserToken &&
+    /^[\w-]{43}$/.test(organiserToken)
+  ) {
+    response.cookies.set("dais.org", organiserToken, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: request.nextUrl.protocol === "https:",
+      path: "/",
+      maxAge: 30 * 24 * 60 * 60,
+    });
+    response.headers.set("Cache-Control", "private, no-store");
+  }
   return response;
 }
 

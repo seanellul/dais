@@ -14,8 +14,8 @@ export default defineConfig({
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
-  // Runs against a production build of the app on an embedded PGlite database
-  // unless E2E_BASE_URL points at a server that is already running.
+  // Local runs default to PGlite; CI supplies its isolated Postgres database.
+  // E2E_BASE_URL uses an already running production server.
   webServer: process.env.E2E_BASE_URL
     ? undefined
     : {
@@ -24,10 +24,11 @@ export default defineConfig({
         reuseExistingServer: !process.env.CI,
         timeout: 120_000,
         env: {
-          PGLITE_DIR: "./data/pglite-e2e",
-          SESSION_SECRET: "e2e-session-secret-not-for-production",
-          CRON_SECRET: "e2e-cron-secret",
-          APP_URL: baseURL,
+          DATABASE_URL: process.env.DATABASE_URL ?? "",
+          PGLITE_DIR: process.env.PGLITE_DIR ?? "./data/pglite-e2e",
+          SESSION_SECRET: process.env.SESSION_SECRET ?? "e2e-session-secret-not-for-production",
+          CRON_SECRET: process.env.CRON_SECRET ?? "e2e-cron-secret",
+          APP_URL: process.env.APP_URL ?? baseURL,
           DEMO_ENABLED: "1",
         },
       },

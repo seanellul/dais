@@ -10,7 +10,7 @@ pnpm install
 pnpm dev
 ```
 
-Node 22 or newer; `.nvmrc` says 24. No database is needed: with `DATABASE_URL` unset the app uses an embedded PGlite database in `./data/pglite`. Copy `.env.example` to `.env.local` only if you want to change a default.
+Node 22 or newer; `.nvmrc` says 24. No separate database is needed: with `DATABASE_URL` unset the app uses an embedded PGlite database in `./data/pglite`. Copy `.env.example` to `.env.local` only if you want to change a default.
 
 Next.js 16 differs from older versions (`proxy.ts` instead of `middleware.ts`, Turbopack by default, async request APIs, typed routes). When unsure about an API, read `node_modules/next/dist/docs/01-app/` rather than memory.
 
@@ -32,7 +32,7 @@ These come from `CLAUDE.md`, which is the short version every tool and contribut
 1. **Confidential data never enters the repository.** No real names of debaters, judges or schools, and no real scores, in code, fixtures, screenshots, tests, docs or commit messages. Invent sample data. The director's workbook is referenced by its shape only.
 2. **`src/domain` is pure TypeScript.** No imports from Next, React, Drizzle, `pg`, PGlite, Node built-ins or any app layer. ESLint enforces it. The same code runs in the browser, on the server and in tests.
 3. **Never throw to the UI.** Server Actions return `{ ok: true, data } | { ok: false, error }`. Route handlers return `{ code, message, retryable, requestId }` on errors. Use `AppError` and the factories in `src/server/errors.ts`.
-4. **Every organiser override needs a reason and an audit row.** Nothing is deleted: withdrawn entities are status flags, discarded sheets become tombstones.
+4. **Every organiser override needs a reason and an audit row.** Retain scoring history: withdrawn entities use status flags and unmatched-sheet decisions keep the original record. Demo expiry, resets and authorised restores have explicit lifecycle semantics.
 5. **Judge routes are JSON route handlers under `/api/judge/*`** with stable URLs. The judge app never calls Server Actions.
 6. **No dynamic `import()` inside `src/judge`.** Everything must be precached for offline use.
 7. **User-facing text uses the tournament vocabulary** in `docs/GLOSSARY.md`: sheet, debater, draw, panel, two versions, set aside, publish results. Internal code may use technical names; UI copy may not. British spelling.
@@ -74,7 +74,7 @@ Write the test at the lowest level that can prove the behaviour.
 4. Run `pnpm db:migrate` locally, then the integration suite.
 5. Commit the SQL and the meta files together with the schema change.
 
-On merge to `main`, `.github/workflows/migrate-production.yml` applies the migration to production before the deploy (see the README). The Docker image applies it at boot through `docker/migrate/migrate.mjs`, a plain JavaScript helper with its own `package.json`; keep the versions of `drizzle-orm`, `pg` and `@electric-sql/pglite` there in step with the root `package.json`.
+When production secrets are configured, `.github/workflows/migrate-production.yml` applies migrations on pushes to `main`. Deployment waits only when migration-first hook ordering is configured; otherwise Vercel Git deploys may start concurrently (see the README). The Docker image applies it at boot through `docker/migrate/migrate.mjs`, a plain JavaScript helper with its own `package.json`; keep the versions of `drizzle-orm`, `pg` and `@electric-sql/pglite` there in step with the root `package.json`.
 
 ## Pull requests
 
@@ -83,3 +83,11 @@ Keep them small and describe the tournament-day problem they solve. The pull req
 ## Reporting a security problem
 
 Do not open a public issue. See `SECURITY.md`.
+
+## Preview and release evidence
+
+The intended repository is `https://github.com/seanellul/dais`; it is being prepared for release. Report automated Chromium evidence separately from a real-phone HTTPS/offline rehearsal, hosted Neon cold-start testing, a clean-clone start and desktop Excel checks. A phone-width screenshot is not a real-device test. Keep unfinished release gates visible.
+
+For accessibility changes, test organiser/auth/print routes in light and dark, phone-width overflow and targets, keyboard navigation and main focus. Wait for theme hydration and CSS transitions before measuring static contrast. Judge offline checks require a production build and service worker; plain LAN HTTP on phones cannot provide them. Hand-off regressions must use full checked payloads, preserve receipts and demonstrate the original phone retry retaining comments.
+
+Use a disposable `DATABASE_URL_TEST`. Avoid extra public demo creation in route scans; reuse an isolated fixture. Never commit browser storage-state files or traces containing credentials.

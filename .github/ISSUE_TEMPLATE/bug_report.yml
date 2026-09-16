@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for the report. Please never paste real names of debaters, judges or schools, or real scores. Use the demo tournament or invented data to reproduce the problem.
+        Thanks for the report. Please never paste real names of debaters, judges or schools, or real scores. Remove cookies, judge QR/card tokens, invite URLs and database credentials from screenshots and traces. Use the demo tournament or invented data to reproduce the problem.
   - type: textarea
     id: what-happened
     attributes:
@@ -45,7 +45,7 @@ body:
     id: version
     attributes:
       label: Dais version or commit
-      placeholder: v1.0.0 or a commit hash
+      placeholder: pre-release commit hash or release tag
   - type: input
     id: device
     attributes:

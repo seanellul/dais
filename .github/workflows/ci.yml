@@ -136,9 +136,9 @@ jobs:
             .next/
             !.next/cache/**
             !.next/standalone/**
-            public/sw.js
-            public/sw.js.map
-            public/swe-worker-*.js
+            public/j/sw.js
+            public/j/sw.js.map
+            public/j/swe-worker-*.js
           retention-days: 1
           include-hidden-files: true
 
@@ -146,6 +146,22 @@ jobs:
     name: End-to-end tests
     needs: build
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: dais
+          POSTGRES_PASSWORD: dais
+          POSTGRES_DB: dais_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U dais -d dais_e2e"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      DATABASE_URL: postgres://dais:dais@localhost:5432/dais_e2e?sslmode=disable
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -168,16 +184,26 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: next-build
-          # Restores .next/ and the generated public/sw*.js files in place.
+          # Restores .next/ and generated public/j/sw* files in place.
           path: .
       - name: Install Chromium
         if: steps.detect.outputs.present == 'true'
         run: pnpm exec playwright install --with-deps chromium
+      - name: Migrate isolated browser-test database
+        if: steps.detect.outputs.present == 'true'
+        run: pnpm db:migrate
+      - name: Create private fictional judge fixture
+        if: steps.detect.outputs.present == 'true'
+        run: pnpm exec tsx scripts/load-judge.ts --setup
+        env:
+          DAIS_LOAD_SETUP: "1"
+          DAIS_LOAD_FIXTURE: data/ci-load-fixture.json
       - name: Run Playwright
         if: steps.detect.outputs.present == 'true'
         run: pnpm e2e
         env:
           CI: "true"
+          E2E_JUDGE_FIXTURE: data/ci-load-fixture.json
       - name: Upload Playwright report
         if: failure() && steps.detect.outputs.present == 'true'
         uses: actions/upload-artifact@v4

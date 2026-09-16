@@ -5,7 +5,7 @@
 
 # testing
 /coverage
-/test-results
+/test-results*/
 /playwright-report
 /blob-report
 /.playwright-mcp
@@ -19,6 +19,9 @@
 /public/sw.js
 /public/sw.js.map
 /public/swe-worker-*.js
+/public/j/sw.js
+/public/j/sw.js.map
+/public/j/swe-worker-*.js
 
 # local databases and exports
 /data/

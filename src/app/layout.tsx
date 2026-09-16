@@ -7,9 +7,6 @@ import {
   JetBrains_Mono,
   Source_Serif_4,
 } from "next/font/google";
-import { ThemeProvider } from "next-themes";
-
-import { Toaster } from "@/components/ui/sonner";
 import { LiveRegionProvider } from "@/ui/live-region";
 
 import "./globals.css";
@@ -117,20 +114,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <LiveRegionProvider>
-            <a href="#main" className="skip-link">
-              Skip to content
-            </a>
-            {children}
-            <Toaster position="bottom-center" />
-          </LiveRegionProvider>
-        </ThemeProvider>
+        <LiveRegionProvider>
+          <a href="#main" className="skip-link">
+            Skip to content
+          </a>
+          {children}
+        </LiveRegionProvider>
       </body>
     </html>
   );

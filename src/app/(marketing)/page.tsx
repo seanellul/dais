@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 };
 
 /** The judge sample room is wired by the demo track; this is the judge app's home. */
-const SAMPLE_ROOM_URL = "/j" as Route;
+const SAMPLE_ROOM_URL = "/demo/judge" as Route;
 
 /*
  * Everything below is invented sample data. No real school, debater, judge or

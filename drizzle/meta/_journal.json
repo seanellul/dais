@@ -15,6 +15,20 @@
       "when": 1789580953015,
       "tag": "0002_audit_immutable",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1789596471053,
+      "tag": "0003_last_cobalt_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1789598132512,
+      "tag": "0004_legal_krista_starr",
+      "breakpoints": true
     }
   ]
 }

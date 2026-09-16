@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ThemeToggle } from "@/ui/theme-toggle";
 
 /** Placeholder until the repository is public. */
-export const GITHUB_URL = "https://github.com/example/dais";
+export const GITHUB_URL = "https://github.com/seanellul/dais";
 
 /**
  * The public site's header: wordmark, GitHub link and the colour-mode toggle.

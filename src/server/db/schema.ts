@@ -165,6 +165,8 @@ const reasonRequired = () => text("reason").notNull();
 
 export const organisations = pgTable("organisations", {
   id: uuidPk(),
+  /** Throwaway public demo tenancy; never inferred from a user-entered name. */
+  isDemo: boolean("is_demo").notNull().default(false),
   slug: text("slug").notNull().unique("organisations_slug_unique"),
   name: text("name").notNull(),
   createdAt: createdAt(),
@@ -353,6 +355,7 @@ export const rounds = pgTable(
     format: roundFormatEnum("format").notNull(),
     sidesDecided: sidesDecidedEnum("sides_decided").notNull().default("in-advance"),
     status: roundStatusEnum("status").notNull().default("pending"),
+    closedAt: timestampTz("closed_at"),
     createdAt: createdAt(),
   },
   (t) => [
@@ -784,6 +787,13 @@ export const scoreOverrides = pgTable(
   ],
 );
 
+export interface JudgeDeviceSheetStatus {
+  assignmentId: string;
+  state: "draft" | "queued" | "sending" | "conflict" | "attention" | "received";
+  filled?: number;
+  updatedAt?: string;
+}
+
 /** Heartbeat from a judge's phone, so the live board can say "queued on phone, last seen 2 min ago". */
 export const judgeDevices = pgTable(
   "judge_devices",
@@ -798,6 +808,7 @@ export const judgeDevices = pgTable(
     lastSeenAt: timestampTz("last_seen_at").notNull().defaultNow(),
     queuedCount: integer("queued_count").notNull().default(0),
     queuedAssignmentIds: jsonb("queued_assignment_ids").$type<string[]>().notNull().default([]),
+    statuses: jsonb("statuses").$type<JudgeDeviceSheetStatus[]>().notNull().default([]),
     appVersion: text("app_version"),
     userAgent: text("user_agent"),
     createdAt: createdAt(),

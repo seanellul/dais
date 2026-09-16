@@ -1,104 +1,106 @@
 # Dais
 
-[![CI](https://github.com/OWNER/dais/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/dais/actions/workflows/ci.yml)
-[![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
-[![Status: pre-release](https://img.shields.io/badge/status-pre--release-orange.svg)](#status)
+Points-ranked school debate tournaments, scored on phones. Organisers prepare teams, judges and rooms, publish the draw, receive sheets, resolve competing versions and publish results with a readable scoring trace.
 
-Dais runs points-ranked school debate tournaments. Judges score on their phones, and the sheets keep working when the venue Wi-Fi does not. The organiser watches every sheet arrive on one board, sets aside outliers with a reason, publishes results, and exports the director's workbook. It is free and open source under the MIT licence, and a whole tournament fits inside the free tiers of Vercel and Neon, or one Docker container on a laptop.
+MIT licensed. The repository is [seanellul/dais](https://github.com/seanellul/dais).
 
-> **Status.** Dais is being built for its first deployment, a two-division inter-schools tournament in the Cayman Islands. Until the `v1.0.0` tag exists, treat every screen as a preview and every setting as subject to change.
+## Status
+
+**Pre-release preview.** The review deployment is [dais-beryl.vercel.app](https://dais-beryl.vercel.app). Do not treat a preview or a successful automated test as approval to run a real event. Real-phone HTTPS/offline testing, a clean-clone start, hosted cold-start checks and opening the workbook in desktop Excel are release gates. No real-device testing is claimed here.
+
+The default scoring policy follows the director’s workbook interpretation; organisers must confirm their tournament’s rules. Read [SCORING](docs/SCORING.md) and [open rule decisions](docs/QUESTIONS-FOR-IAN.md).
 
 ## Five-minute local start
 
-You need Node 22 or newer (24 recommended, see `.nvmrc`) and pnpm. No database, no Docker.
+Node 22 or newer, pnpm 11 (the exact version is pinned in `package.json`); `.nvmrc` selects Node 24.
 
 ```sh
-git clone https://github.com/OWNER/dais.git
+git clone https://github.com/seanellul/dais.git
 cd dais
-corepack enable        # installs the pinned pnpm on first use
-pnpm install
+corepack enable
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open <http://localhost:3000>. With no `DATABASE_URL`, Dais stores everything in an embedded PGlite database under `./data/pglite`. Click **Try the live demo** to get a tournament that is about to start: teams, judges, rooms and a published draw. Scan the judge QR code with a phone on the same network to score a room.
+Open <http://localhost:3000>. With `DATABASE_URL` unset, Dais uses PGlite in `./data/pglite`; no separate database or Docker is required. Keep that directory: it contains your tournaments.
 
-Useful commands:
+Choose **Try the live demo** for an isolated, expiring tournament with invented teams, judges, rooms, a published draw and half of round 1 received. Demo controls can simulate the rest of the day or reset it. Demo data expires after 24 hours; use first-owner setup at `/setup` and create a live tournament for persistent work. Demos do not prevent first-owner setup.
 
-| Command                 | What it does                                                        |
-| ----------------------- | ------------------------------------------------------------------- |
-| `pnpm check`            | lint, typecheck and unit tests, the same gate CI runs first         |
-| `pnpm test:integration` | the database suite on PGlite (set `DATABASE_URL_TEST` for Postgres) |
-| `pnpm e2e`              | Playwright against a production build                               |
-| `pnpm db:generate`      | write a migration after editing `src/server/db/schema.ts`           |
-| `pnpm db:migrate`       | apply migrations to `DATABASE_URL`                                  |
+A phone cannot reach your laptop through `localhost`. Phone QR cards need a reachable `APP_URL`. Plain LAN HTTP does **not** support service workers on phones, so it cannot provide the offline judge app. See [OFFLINE](docs/OFFLINE.md).
 
-## What Dais does
+## Tournament workflow
 
-**Before the day.** Paste the team list in the shape of the director's spreadsheet (school, debater, team). Add judges; each gets a short code and a QR card. Set up rooms and panels. Draw the rounds at random by team code with a visible seed, so anyone with the seed and the team list can reproduce the draw. Check the draw against the rules (nobody meets twice, sides balanced, every judge in one room per round). Print door sheets, itineraries and judge cards.
+1. Create a tournament and follow its eight-step run sheet.
+2. Add or paste teams, add judges, assign fixed room panels and check capacity.
+3. Generate and review the seeded draw; resolve blockers and publish it. Print room doors, itineraries and judge cards.
+4. Open each round. Judges score four debaters on their phones; the live board refreshes every five seconds. A phone’s saved draft or waiting state is different from a server receipt.
+5. Enter paper sheets, receive a full phone hand-off, compare two versions, correct a sheet or waive a missing sheet with a recorded reason. A changed draw retains old sheets for explicit recovery.
+6. Review result traces and any keep/set-aside overrides. Resolve completeness blockers, confirm the two finalists (including a reason for a tie decision), then publish. Reopen with a reason to make corrections.
+7. Download records and a JSON backup. Sign out all devices for each judge after the day.
 
-**During rounds.** Judges open the app once online, then score in speaking order on a 390 px screen: three categories out of 33, points of information out of 4, an independent Overall out of 103 with the rubric band shown as they type, and "What went well" / "Even better if" for each debater. Every change is saved on the phone. Sheets send when there is signal and wait when there is not. The organiser's live board shows each room and judge seat: not yet in, in, waiting on the phone, two versions, the draw changed. Sheets can be typed in from paper, corrected with a reason, or handed off by QR code when a phone will not connect.
+Scores use three categories out of 33, points of information out of 4 and an independent Overall out of 103. Overall is not automatically the category sum. Feedback has “What went well” and “Even better if”. Withdrawn or discarded scoring work remains in history; demo expiry, resets and explicitly authorised restore operations have their own lifecycle.
 
-**Results.** The tournament's outlier policy runs exactly as the director's workbook does: pooled average and spread per debater, scores outside the kept range set aside, round averages summed, ranks with ties preserved. Every set-aside score names the judge and the range, in words. The organiser can keep or set aside any score with a reason; every override is audited and reversible. Results stay provisional, with the missing sheets named, until they are published. Exports: the workbook in the director's shape with live formulas, five CSVs, per-school feedback packs, and a JSON backup.
+**Exports:** six CSVs (draw, itineraries, debaters, teams, scores and feedback), the XLSX workbook, a JSON backup and PDF/print versions of doors, itineraries, judge cards, blank scoresheets, feedback and results. Public pages expose only the schedule and allowed results, when enabled in settings. Use the generated public link; it includes the tournament ID.
 
-**Reliability.** No sheet is ever silently lost or overwritten. Submissions are idempotent, conflicts are stored as data for the organiser to resolve, and nothing is deleted: withdrawn teams are flagged, discarded sheets become tombstones. Errors carry a request id you can quote.
+**Hand-off:** send the full checked text or QR contents. The six-digit checksum only helps check that full payload; it cannot reconstruct a sheet. Matching later phone numbers can be settled by merging the original comments, with an organiser decision. See [OFFLINE](docs/OFFLINE.md).
 
-## Deploy to Vercel + Neon
+## Development checks
 
-Both free tiers are enough for a one-day tournament with 40 teams and 20 judges.
+| Command                                       | Purpose                                                                                          |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `pnpm check`                                  | Lint, typecheck and unit tests                                                                   |
+| `pnpm test:integration`                       | Service/API tests on isolated PGlite; set `DATABASE_URL_TEST` for a disposable Postgres database |
+| `pnpm build`                                  | Production build, judge service worker and static CSP hashes                                     |
+| `pnpm e2e`                                    | Playwright against `pnpm start`; build first                                                     |
+| `E2E_BASE_URL=http://localhost:3000 pnpm e2e` | Use an already running production server                                                         |
+| `pnpm venue`                                  | Laptop LAN fallback on PGlite, with a terminal QR and HTTP limitation notice                     |
+| `pnpm db:generate`                            | Generate SQL and metadata after a schema change                                                  |
+| `pnpm db:migrate`                             | Apply migrations to the configured database                                                      |
 
-1. **Neon.** Create a project in an AWS `us-east-1` region (next to Vercel's `iad1`). Copy two connection strings: the **pooled** one (its host contains `-pooler`) and the direct one.
-2. **Vercel.** Import the repository. `vercel.json` pins the `iad1` region, adds the daily cleanup cron and sets no-cache headers on the service worker.
-3. **Environment variables** in the Vercel project (see `.env.example`):
-   - `DATABASE_URL`: the **pooled** Neon string. The direct endpoint exhausts the free-plan connection budget under a burst of judge submissions.
-   - `SESSION_SECRET`: 32 random bytes, base64. Rotating it signs everyone out.
-   - `CRON_SECRET`: protects `/api/cron/*`. Vercel sends it with cron requests.
-   - `APP_URL`: the public origin, used in QR codes and join links.
-   - `DEMO_ENABLED`: `1` to expose the public demo, `0` to hide it.
-4. **Migrations.** Add the GitHub secret `DATABASE_URL_PRODUCTION` (the **direct** Neon string). The workflow `.github/workflows/migrate-production.yml` applies `drizzle/*.sql` on every push to `main`. Migrations never run from Vercel's build command, because preview builds would migrate production.
-5. **Deploy ordering.** With Vercel's Git integration the production build starts at the same moment as the migration workflow. Two ways to handle this:
-   - _Simple:_ keep Git deploys and write backward-compatible migrations (add columns before code reads them, drop them one release later). This is the default.
-   - _Strict:_ in Vercel, set **Settings → Git → Ignored Build Step** to `if [ "$VERCEL_ENV" = "production" ]; then exit 0; else exit 1; fi` so production no longer builds on push, create a **Deploy Hook** for `main`, and store its URL in the GitHub secret `VERCEL_DEPLOY_HOOK_URL`. The workflow calls the hook only after the migration succeeds. Verify on the first deploy that hook-triggered builds are not skipped by the ignored build step.
-6. **Tournament day.** Neon suspends an idle database after a few minutes. Keeping the organiser dashboard open keeps it awake (the live board polls). As a helper, set the repository variables `KEEPALIVE=1` and `APP_URL` to have `.github/workflows/keepalive.yml` ping `/api/health/db` every five minutes; set `KEEPALIVE=0` afterwards.
+Install Chromium once with `pnpm exec playwright install chromium`. Tests use invented data. Integration tests must never target a live tournament database. See [CONTRIBUTING](CONTRIBUTING.md).
 
-`GET /api/health` answers without the database; `GET /api/health/db` runs `SELECT 1`. Use them for uptime checks.
+## Deploy to Vercel and Postgres
 
-## Self-host with Docker
+Neon is one supported Postgres provider. Plan limits and hosting terms change; check them before choosing an event deployment. This preview does not promise a cost or capacity guarantee.
+
+1. Create the database near the app region (`iad1` in `vercel.json`). Use the pooled Neon connection for application traffic and the direct connection for migrations.
+2. Import the repository into Vercel. Set `DATABASE_URL`, `APP_URL` (the public HTTPS origin), a random `SESSION_SECRET` and `CRON_SECRET`; choose `DEMO_ENABLED=1` or `0`. `.env.example` describes optional settings. Never deploy its example secrets. Generate a secret with `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`.
+3. Apply committed migrations with `pnpm db:migrate`, or configure the GitHub production environment and `DATABASE_URL_PRODUCTION` secret for `.github/workflows/migrate-production.yml`. Preview builds do not migrate production.
+4. Git-triggered Vercel deploys and GitHub migrations may start concurrently. Use backward-compatible migrations, or arrange a migration-first deployment: disable automatic production Git builds and set the `VERCEL_DEPLOY_HOOK_URL` secret so the workflow calls a hook after migrations. Verify the hook and ignored-build behaviour on the first deployment.
+5. Verify `/api/health`, `/api/health/db`, native demo entry, a judge QR on a real phone, offline recovery and exports on the deployed origin before the event.
+
+Rotating `SESSION_SECRET` invalidates existing sessions and judge cards. Do it between events and reissue cards. Never commit credentials or real tournament data.
+
+For event-day database warming, set repository variables `KEEPALIVE=1` and `APP_URL` to the deployed HTTPS origin; `.github/workflows/keepalive.yml` requests `/api/health/db` about every five minutes. Scheduled Actions can be delayed or disabled: this is a helper, not an availability guarantee. Keeping a round’s polling live board open also creates database traffic. Set `KEEPALIVE=0` after the event.
+
+## Self-host
 
 ```sh
-cp .env.example .env            # set SESSION_SECRET and APP_URL
-docker compose up -d            # embedded PGlite database on a named volume
+cp .env.example .env
+# Replace example secrets and set a reachable APP_URL.
+docker compose up -d
 ```
 
-Or on Postgres:
+For the included Postgres configuration:
 
 ```sh
 docker compose -f docker-compose.yml -f docker/compose.postgres.yml up -d
 ```
 
-The image (`Dockerfile`, multi-stage on `node:24-alpine`) runs Next's standalone server as an unprivileged user, applies migrations at boot through `docker/entrypoint.sh`, exposes port 3000, stores PGlite data on the `/data` volume and reports health at `/api/health` (`/api/health/db` also checks the database). Set `DATABASE_URL` to use any Postgres 15+ instead. For a Postgres without TLS, append `?sslmode=disable` to the URL; every other host gets verified TLS. Back up a PGlite deployment by copying the volume while the container is stopped, or by downloading the JSON backup from the tournament's settings page.
+The image applies migrations at boot, runs the standalone server as an unprivileged user, and stores embedded data on a named volume. `SKIP_MIGRATIONS=1` delegates migrations to another operator. Use `sslmode=disable` explicitly for a trusted local Postgres without TLS; other configured modes use verified TLS. Back up the embedded volume while the app is stopped, or download per-tournament JSON backups.
 
-Two variables control migrations in the container. The entrypoint applies them once at boot and sets `DB_AUTO_MIGRATE=0` so the app does not apply them again on its first request. Set `SKIP_MIGRATIONS=1` when somebody else migrates the database; the container then never touches the schema.
-
-For a venue with no internet at all, run the container (or `pnpm dev`) on a laptop and let judges' phones join the laptop's hotspot or the venue LAN; `docs/DAY-OF.md` covers this fallback.
-
-## How Dais compares
-
-Tabbycat is the standard for win-loss tabbing of British Parliamentary and similar formats, with power-pairing, adjudicator allocation and break rounds; it runs on Django and needs a server. Dais does one narrower thing: one-day, points-ranked schools tournaments with a rubric, feedback sheets and offline phone scoring, on a free tier or one container, with a director's-workbook export.
+For a laptop LAN rehearsal, run `pnpm venue`. It selects a LAN IPv4 address, binds Next development mode to `0.0.0.0`, uses a separate embedded database in `./data/venue`, and prints a judge sign-in QR. Set `VENUE_ADDRESS` if it selects the wrong interface, or `PORT` to choose a port. Create or restore the intended tournament in this database before relying on it. Keep the laptop and network running. This is an online browser fallback on a trusted LAN; plain HTTP on phones cannot run its service worker, and offline phone caching requires trusted HTTPS.
 
 ## Documentation
 
-| Document                                               | Read it when                                         |
-| ------------------------------------------------------ | ---------------------------------------------------- |
-| [docs/DAY-OF.md](docs/DAY-OF.md)                       | you are running a tournament                         |
-| [docs/GLOSSARY.md](docs/GLOSSARY.md)                   | you write any text a judge or organiser will see     |
-| [docs/RULES-MAPPING.md](docs/RULES-MAPPING.md)         | you want to know which setting implements which rule |
-| [docs/QUESTIONS-FOR-IAN.md](docs/QUESTIONS-FOR-IAN.md) | you want the open decisions and the current defaults |
-| [docs/HANDOVER.md](docs/HANDOVER.md)                   | a charity takes over the hosting                     |
-| [CONTRIBUTING.md](CONTRIBUTING.md)                     | you want to change the code                          |
-| [SECURITY.md](SECURITY.md)                             | you found a security problem                         |
-
-Also planned: `docs/SCORING.md` (the outlier policy and how to reproduce the golden fixture in Excel), `docs/OFFLINE.md` (the judge app's state machine) and `docs/DESIGN.md` (tokens and themes).
+- [DAY-OF](docs/DAY-OF.md): rehearsal and event runbook
+- [OFFLINE](docs/OFFLINE.md): phone storage, receipts, retry and hand-off limits
+- [SCORING](docs/SCORING.md): policy and workbook equivalence
+- [RULES-MAPPING](docs/RULES-MAPPING.md) and [QUESTIONS-FOR-IAN](docs/QUESTIONS-FOR-IAN.md): rules and decisions
+- [HANDOVER](docs/HANDOVER.md): transferring hosting and backups
+- [DESIGN](docs/DESIGN.md) and [GLOSSARY](docs/GLOSSARY.md): design and vocabulary
+- [CONTRIBUTING](CONTRIBUTING.md), [SECURITY](SECURITY.md), [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md)
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE). Dais is not affiliated with any tournament or sponsor; the first deployment's name appears only as that tournament's name.
+[MIT](LICENSE). Dais is not affiliated with a tournament or sponsor.

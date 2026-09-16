@@ -1,8 +1,5 @@
 blank_issues_enabled: true
 contact_links:
   - name: Security problem
-    url: https://github.com/OWNER/dais/blob/main/SECURITY.md
+    url: https://github.com/seanellul/dais/blob/main/SECURITY.md
     about: Please do not open a public issue for a security problem. SECURITY.md explains how to report one privately.
-  - name: Question or idea
-    url: https://github.com/OWNER/dais/discussions
-    about: Ask how something works, or float an idea before writing code.

@@ -79,7 +79,7 @@ Three layers, in order of ease:
 - **Before a tournament:** log in, create the tournament, follow the dashboard checklist. Read `docs/DAY-OF.md`.
 - **Updates:** merge Dependabot pull requests when CI is green. Release notes on GitHub say what changed.
 - **Something is wrong:** every error shows a request id. Vercel → Project → Logs, search for it. Open a GitHub issue with the id and the steps; never paste names or scores.
-- **Costs:** none on the free tiers for a handful of one-day tournaments per year. Vercel and Neon both email before you hit a limit.
+- **Costs:** check current plan terms, usage limits and billing alerts; a free tier is not an event-day capacity guarantee.
 
 ## The self-host alternative
 
@@ -89,7 +89,7 @@ If the hosting accounts cannot be transferred, or you want everything on one mac
 2. Clone the repository. `cp .env.example .env`, set `SESSION_SECRET` and `APP_URL`.
 3. `docker compose up -d`. The app runs at port 3000 on an embedded database stored in a Docker volume.
 4. Restore the JSON backup from Tournament → Settings → Restore.
-5. Judges' phones must reach the laptop: same Wi-Fi, or the laptop's hotspot. For HTTPS (needed for the installable judge app on iOS) put a reverse proxy with a certificate in front, or use the browser without installing.
+5. Judges' phones must reach the laptop: same Wi-Fi, or the laptop's hotspot. For offline phone caching, use trusted HTTPS with a certificate the phones accept. Plain LAN HTTP can serve an online browser page, but phones cannot run its service worker, whether or not they install a home-screen icon. See `docs/OFFLINE.md`.
 
 Back up a self-hosted instance by stopping the container and copying the volume, or by downloading JSON backups.
 

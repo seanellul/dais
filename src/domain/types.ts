@@ -75,6 +75,11 @@ export interface TournamentSettings {
   panelMode: PanelMode;
   judgesPerRoom: number;
   feedbackRequired: boolean;
+  /** Optional event details; old tournament backups remain valid. */
+  contact?: string;
+  eventDate?: string;
+  venue?: string;
+  publicPage?: { enabled: boolean; showProvisional: boolean };
 }
 
 export interface Speaker {

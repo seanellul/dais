@@ -17,7 +17,9 @@
 name: Migrate production database
 
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -31,6 +33,7 @@ concurrency:
 jobs:
   check:
     name: Is production configured?
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     outputs:
       configured: ${{ steps.check.outputs.configured }}
@@ -48,6 +51,8 @@ jobs:
     environment: production
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
@@ -68,5 +73,5 @@ jobs:
             curl -fsS -X POST "$DEPLOY_HOOK_URL" >/dev/null
             echo "Deploy hook called."
           else
-            echo "No VERCEL_DEPLOY_HOOK_URL secret; Vercel's Git integration deploys on its own."
+            echo "No deploy hook configured. Deploy this migrated revision with the Vercel CLI."
           fi

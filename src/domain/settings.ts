@@ -162,6 +162,10 @@ export const settingsSchema = z.object({
   panelMode: z.enum(["fixed-room", "per-round"]),
   judgesPerRoom: z.number().int().min(1).max(5),
   feedbackRequired: z.boolean(),
+  contact: z.string().trim().max(500).optional(),
+  eventDate: z.string().trim().max(100).optional(),
+  venue: z.string().trim().max(500).optional(),
+  publicPage: z.object({ enabled: z.boolean(), showProvisional: z.boolean() }).optional(),
 });
 
 export type SettingsIssue = { path: string; message: string };

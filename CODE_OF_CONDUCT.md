@@ -60,7 +60,7 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-**conduct@example.org** (placeholder: replace with the maintainer's address).
+[the maintainer’s GitHub profile](https://github.com/seanellul). Request a private contact channel before sharing sensitive details. A dedicated private reporting channel must be established before public release.
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the

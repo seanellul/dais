@@ -1,0 +1,218 @@
+.judge-app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+.judge-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  background: var(--topbar);
+  color: var(--on-topbar);
+}
+.judge-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 28px 20px 36px;
+  flex: 1;
+}
+.judge-connection {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--divider);
+}
+.judge-panel {
+  background: var(--surface);
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.judge-round {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 12px 16px 16px;
+}
+.judge-round-number {
+  font-family: var(--type-display);
+  font-size: 40px;
+  line-height: 1;
+  width: 48px;
+}
+.judge-round-number span {
+  display: block;
+  font-family: var(--type-body);
+  font-size: 12px;
+  line-height: 20px;
+  margin-top: 4px;
+  color: var(--text-secondary);
+}
+.judge-round .chip {
+  margin-top: 10px;
+  white-space: normal;
+}
+.judge-input {
+  width: 100%;
+  min-height: 48px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text);
+}
+.judge-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.judge-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+}
+.judge-button:hover {
+  background: var(--surface-sunken);
+}
+.judge-button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.judge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: 8px;
+}
+.judge-icon:hover {
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+.judge-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--warning-surface);
+  color: var(--text);
+  font-size: 14px;
+}
+.judge-notice > p {
+  flex: 1;
+  padding-top: 10px;
+}
+.judge-notice .judge-button {
+  font-size: 14px;
+  padding: 10px;
+}
+.judge-speaker-legend {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-family: var(--type-display);
+  font-size: 24px;
+  padding: 0 8px;
+}
+.judge-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  font-size: 14px;
+}
+.judge-check input {
+  appearance: auto;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+}
+.judge-details {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+.judge-details summary {
+  min-height: 48px;
+  display: list-item;
+  padding: 12px 0;
+  cursor: pointer;
+  color: var(--link);
+  font-weight: 500;
+}
+.judge-review-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 0 0 16px;
+  border-bottom: 1px solid var(--divider);
+}
+.judge-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px;
+  border-top: 1px solid var(--divider);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.judge-app .chip {
+  max-width: 100%;
+  white-space: normal;
+}
+.judge-app .action-button {
+  white-space: normal;
+  text-align: center;
+  height: auto;
+  min-height: 56px;
+  padding-block: 12px;
+}
+.judge-app .sticky-action-bar {
+  backdrop-filter: none;
+  background: var(--surface);
+}
+.judge-app input,
+.judge-app textarea {
+  scroll-margin-bottom: 140px;
+}
+@media (max-width: 359px) {
+  .judge-content {
+    padding-inline: 12px;
+  }
+  .judge-panel {
+    padding: 16px;
+  }
+  .judge-app .sticky-action-bar {
+    padding-inline: 12px;
+  }
+}

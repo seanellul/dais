@@ -12,13 +12,16 @@ out
 build
 coverage
 playwright-report
-test-results
+test-results*
 blob-report
 .playwright-mcp
 
 # Local databases, exports and generated service worker files
 data
 *.pglite
+public/j/sw.js
+public/j/sw.js.map
+public/j/swe-worker-*.js
 public/sw.js
 public/sw.js.map
 public/swe-worker-*.js

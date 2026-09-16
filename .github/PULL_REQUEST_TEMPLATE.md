@@ -20,3 +20,7 @@
 ## Screenshots
 
 <!-- For UI changes: light and dark, and the judge app at 390 px if relevant. Demo data only. -->
+
+## Verification limits
+
+<!-- State the exact checks and environment. Separate Chromium/mobile emulation from real-phone HTTPS/offline evidence. Name pending release gates. Do not attach cookies, invite links, judge card tokens or real tournament data. -->
