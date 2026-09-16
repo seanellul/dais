@@ -233,42 +233,40 @@ jobs:
             GIT_SHA=${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Boot the image and check /api/health
+      - name: Boot the image and create a demo on PGlite
         run: |
           docker run -d --name dais-ci -p 3000:3000 \
             -e SESSION_SECRET="$SESSION_SECRET" \
             -e APP_URL=http://localhost:3000 \
             dais:ci
+          trap 'docker logs dais-ci; docker rm -f dais-ci' EXIT
           for attempt in $(seq 1 30); do
             if curl -fsS http://localhost:3000/api/health >/dev/null 2>&1; then
               echo "Healthy after ${attempt} attempts."
-              docker rm -f dais-ci
+              node scripts/smoke-demo.mjs
               exit 0
             fi
             sleep 2
           done
           echo "The container never became healthy. Logs:"
-          docker logs dais-ci
-          docker rm -f dais-ci
           exit 1
       # The compose override must boot against a plain Postgres (no TLS) and
       # answer /api/health/db, which runs a query through the app's own pool.
-      - name: Boot docker compose with Postgres and check /api/health/db
+      - name: Boot docker compose and create a demo on Postgres
         run: |
           docker tag dais:ci dais:local
           compose="docker compose -f docker-compose.yml -f docker/compose.postgres.yml"
           $compose up -d --no-build
+          trap '$compose logs; $compose down -v' EXIT
           for attempt in $(seq 1 45); do
             if curl -fsS http://localhost:3000/api/health/db >/dev/null 2>&1; then
               echo "Database healthy after ${attempt} attempts."
-              $compose down -v
+              node scripts/smoke-demo.mjs
               exit 0
             fi
             sleep 2
           done
           echo "The app never reached Postgres. Logs:"
-          $compose logs
-          $compose down -v
           exit 1
 
   gitleaks:

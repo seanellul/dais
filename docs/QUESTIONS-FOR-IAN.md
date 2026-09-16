@@ -1,8 +1,8 @@
 # Questions for the tournament director
 
-These are the decisions the rules and the workbook leave open. Each entry gives the current default the app implements, so the tournament can run today, and what changes if the answer differs. Most defaults are settings, not code.
+These are the decisions the rules and the workbook leave open. Each entry gives the current default to review and what changes if the answer differs. Most defaults are settings, not code.
 
-Defaults marked "planned" belong to a milestone that has not shipped yet; the setting will appear when it does.
+Already agreed with Sean: prepare all three rounds in advance; judges stay in their allocated rooms and teams move between rooms.
 
 ## 1. Outlier scope: pooled or per round?
 
@@ -40,9 +40,9 @@ The three categories (33 + 33 + 33) and points of information (4) add up to 103,
 **Default:** the results page flags a tie at the cut and asks the organiser to **confirm finalists** with a reason. No automatic tie-break.
 **Alternatives:** higher single-round total, head-to-head result, coin toss. Any of these can become the default once chosen.
 
-## 7. Judges fixed to one room all day, or re-drawn per round; panel size
+## 7. Panel size (fixed rooms already confirmed)
 
-**Default:** judges stay in one room all day (fixed-room panels). Panels of 1 to 5 judges; the default number per room is 3.
+**Confirmed:** judges stay in one room all day (fixed-room panels). Panels support 1 to 5 judges; the demo uses 3 per room. Confirm the expected panel size for the real event.
 **Setting:** Settings → Rooms and panels → "Judges stay in one room" / "Judges move each round", and "Judges per room".
 
 ## 8. One-person teams
@@ -62,8 +62,8 @@ Should a judge never sit on a debate involving their own school?
 
 ## 11. Feedback delivery and judge names
 
-**Default (planned, exports milestone):** per-school PDF packs for coaches, one page per debater with every judge's "What went well" and "Even better if" across the three rounds. Judge names are **not** printed on feedback sheets; the organiser sees them on screen.
-**Alternatives:** private per-debater links; judge names shown.
+**Current export:** a PDF grouped by school, with a section per debater containing each judge's "What went well" and "Even better if" across the three rounds. Judge names **are printed** on these private feedback sheets. Feedback is not shown on the public page.
+**Decision:** keep judge names on coach copies, or anonymise them? Private per-debater links would be a separate feature.
 
 ## 12. What the public page shows on the day
 

@@ -142,7 +142,7 @@ export async function buildPrintPack(
         ],
         notes: [
           `Motion: ${display.motion || "To be announced"}`,
-          "Sides as drawn □  Sides reversed □  Government roles swapped □  Opposition roles swapped □",
+          "Sides as drawn [ ]  Sides reversed [ ]  Government roles swapped [ ]  Opposition roles swapped [ ]",
           "Overall is an independent judgement. Scores above 90 are very rare.",
           `No rebuttal attempted = ${schedule.settings.rubric.noRebuttalScore}.`,
           "Signed: __________________________",

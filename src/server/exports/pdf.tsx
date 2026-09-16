@@ -2,18 +2,21 @@ import { Document, Image, Page, StyleSheet, Text, View, renderToBuffer } from "@
 import type { PrintPack } from "./print-pack";
 
 const styles = StyleSheet.create({
-  page: { padding: 32, fontFamily: "Helvetica", fontSize: 9, lineHeight: 1.4, color: "#16202b" },
-  card: { padding: 18, fontSize: 9 },
+  page: { padding: 32, fontFamily: "Helvetica", fontSize: 9, lineHeight: 1.25, color: "#16202b" },
+  card: { padding: 10, fontSize: 8 },
   eyebrow: { fontSize: 8, color: "#526171", marginBottom: 8 },
-  title: { fontFamily: "Helvetica-Bold", fontSize: 22, marginBottom: 6 },
-  subtitle: { fontSize: 11, marginBottom: 18 },
+  title: { fontFamily: "Helvetica-Bold", fontSize: 22, lineHeight: 1.15, marginBottom: 10 },
+  subtitle: { fontSize: 11, lineHeight: 1.3, marginBottom: 14 },
   row: { flexDirection: "row", borderBottom: "0.5 solid #cbd5df" },
   head: { backgroundColor: "#e9eef5", fontFamily: "Helvetica-Bold" },
   cell: { padding: 6, flexGrow: 1, flexBasis: 0 },
   notes: { marginTop: 12 },
-  note: { marginBottom: 6 },
+  note: { marginBottom: 6, lineHeight: 1.25 },
+  cardNotes: { marginTop: 6 },
+  cardNote: { fontSize: 7.5, lineHeight: 1.2, marginBottom: 4 },
   footer: { position: "absolute", bottom: 14, left: 32, right: 32, fontSize: 7, color: "#526171" },
-  qr: { width: 115, height: 115, alignSelf: "center", marginVertical: 12 },
+  qr: { width: 92, height: 92, alignSelf: "center", marginVertical: 8 },
+  cardCell: { padding: 4 },
   watermark: { color: "#8a5a00", fontSize: 8, marginBottom: 8 },
 });
 
@@ -38,7 +41,7 @@ export async function printPackPdf(pack: PrintPack): Promise<Buffer> {
           {section.qr && <Image src={section.qr} style={styles.qr} />}
           <View style={[styles.row, styles.head]} fixed>
             {section.columns.map((column, n) => (
-              <Text key={n} style={styles.cell}>
+              <Text key={n} style={pack.kind === "judges" ? [styles.cell, styles.cardCell] : styles.cell}>
                 {column}
               </Text>
             ))}
@@ -46,15 +49,15 @@ export async function printPackPdf(pack: PrintPack): Promise<Buffer> {
           {section.rows.map((row, n) => (
             <View key={n} style={styles.row} wrap={false}>
               {row.map((value, k) => (
-                <Text key={k} style={styles.cell}>
+                <Text key={k} style={pack.kind === "judges" ? [styles.cell, styles.cardCell] : styles.cell}>
                   {value}
                 </Text>
               ))}
             </View>
           ))}
-          <View style={styles.notes}>
+          <View style={pack.kind === "judges" ? styles.cardNotes : styles.notes}>
             {section.notes.map((note, n) => (
-              <Text key={n} style={styles.note}>
+              <Text key={n} style={pack.kind === "judges" ? styles.cardNote : styles.note}>
                 {note}
               </Text>
             ))}
