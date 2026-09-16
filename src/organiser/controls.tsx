@@ -178,7 +178,7 @@ export function Table({
   children: React.ReactNode;
 }) {
   return (
-    <div className="org-scroll">
+    <div className="org-scroll" tabIndex={0} role="region" aria-label={caption}>
       <table className="org-table">
         <caption>{caption}</caption>
         <thead>
