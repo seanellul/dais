@@ -28,6 +28,7 @@
  * the integration tests switch driver and directory between files, and the
  * validated env is parsed once per process.
  */
+import { mkdirSync } from "node:fs";
 import { PGlite } from "@electric-sql/pglite";
 import { attachDatabasePool } from "@vercel/functions";
 import type { ExtractTablesWithRelations } from "drizzle-orm";
@@ -196,6 +197,9 @@ function openNodePg(connectionString: string): DbHandle {
 }
 
 async function openPglite(dir: string): Promise<DbHandle> {
+  // PGlite does not create parent directories, so a fresh checkout with
+  // PGLITE_DIR=./data/pglite (data/ is gitignored) would fail to open.
+  if (dir !== ":memory:") mkdirSync(dir, { recursive: true });
   const client = dir === ":memory:" ? new PGlite() : new PGlite(dir);
   await client.waitReady;
   const db: Db = drizzlePglite(client, { schema });
