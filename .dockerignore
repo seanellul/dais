@@ -44,3 +44,9 @@ docker-compose.yml
 
 # Installed only inside the image build
 docker/migrate/node_modules
+
+# Colocated tests import fixtures that are excluded from deployment builds.
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
