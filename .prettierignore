@@ -1,0 +1,10 @@
+.next
+node_modules
+pnpm-lock.yaml
+drizzle/meta
+coverage
+playwright-report
+test-results
+public/sw.js
+data
+AGENTS.md
