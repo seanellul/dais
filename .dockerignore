@@ -1,0 +1,43 @@
+# Keep the build context small and free of secrets.
+.git
+.github
+.vercel
+.idea
+.vscode
+.claude
+
+node_modules
+.next
+out
+build
+coverage
+playwright-report
+test-results
+blob-report
+.playwright-mcp
+
+# Local databases, exports and generated service worker files
+data
+*.pglite
+public/sw.js
+public/sw.js.map
+public/swe-worker-*.js
+
+# Environment files: pass configuration at run time, never bake it in
+.env
+.env.*
+!.env.example
+
+# Docs and tooling the image does not need
+docs
+tests
+*.md
+!README.md
+Dockerfile
+docker-compose.yml
+.dockerignore
+.DS_Store
+*.log
+
+# Installed only inside the image build
+docker/migrate/node_modules

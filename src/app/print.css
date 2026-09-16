@@ -1,0 +1,171 @@
+/*
+ * Print rules for every Dais route. Imported once from src/app/layout.tsx.
+ *
+ * The rules follow docs/DESIGN.md "Print":
+ *   - A4 with 14mm margins; results pages ask for landscape with .print-landscape.
+ *   - Navigation, bars and buttons are hidden.
+ *   - Black text on white, whatever the theme or mode.
+ *   - Table headers repeat on every page; rows and cards do not split.
+ *   - .print-page carries the header and footer stamps (see src/ui/print-page.tsx).
+ *   - No URLs are printed after links, except intentional QR captions.
+ */
+
+@page {
+  size: A4 portrait;
+  margin: 14mm;
+}
+
+@page landscape {
+  size: A4 landscape;
+  margin: 14mm;
+}
+
+@media print {
+  html {
+    /* Undo presentation mode. */
+    font-size: 12pt;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Chrome that has no meaning on paper. */
+  nav,
+  header[data-print="hide"],
+  footer[data-print="hide"],
+  aside,
+  button,
+  [role="button"],
+  [data-print="hide"],
+  .skip-link,
+  .sticky-action-bar,
+  .banner[data-kind="offline"],
+  .banner[data-kind="sandbox"],
+  .banner[data-kind="readonly"],
+  [data-sonner-toaster] {
+    display: none !important;
+  }
+
+  /* Black on white regardless of theme, but keep tinted status surfaces as
+     light grey so the reader can still see a grouping. */
+  * {
+    color: #000000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  .chip,
+  .side-tag,
+  .role-tag,
+  .banner[data-kind="provisional"],
+  .print-page__stamp {
+    border: 1px solid #000000 !important;
+  }
+
+  a,
+  a:visited {
+    text-decoration: none;
+  }
+  /* No URLs after links. QR captions print their own text. */
+  a[href]::after {
+    content: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  /* Tables: repeat the header, never split a row. */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tfoot {
+    display: table-footer-group;
+  }
+  tr,
+  td,
+  th {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  th,
+  td {
+    border-bottom: 1px solid #000000;
+    padding: 4pt 6pt;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  /* Cards and rows stay whole. */
+  [data-slot="card"],
+  .step-row,
+  .print-avoid-break,
+  figure,
+  fieldset {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Each logical document starts on a new page. */
+  .print-page {
+    max-width: none;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    break-after: page;
+    page-break-after: always;
+  }
+  .print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+  .print-page[data-orientation="landscape"],
+  .print-landscape {
+    page: landscape;
+  }
+
+  .print-page__header,
+  .print-page__footer {
+    color: #000000 !important;
+  }
+
+  /* Band bars print as outlined boxes, filled ones solid. */
+  .band-bar__segment {
+    border: 1px solid #000000 !important;
+  }
+  .band-bar__segment[data-filled="true"] {
+    background: #000000 !important;
+  }
+
+  /* Avoid orphaned headings. */
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Print-only helpers. */
+  .print-only {
+    display: revert !important;
+  }
+  .screen-only {
+    display: none !important;
+  }
+}
+
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}

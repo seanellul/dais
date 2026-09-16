@@ -1,0 +1,32 @@
+# Dais with the embedded PGlite database on a named volume.
+#
+#   cp .env.example .env      # set SESSION_SECRET (16+ characters) and APP_URL
+#   docker compose up -d
+#
+# To run on Postgres instead, add the override file, which starts a
+# postgres:16 service and points DATABASE_URL at it:
+#
+#   docker compose -f docker-compose.yml -f docker/compose.postgres.yml up -d
+#
+# Values in ${...} are read from the .env file next to this one.
+
+services:
+  app:
+    build: .
+    image: dais:local
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env (at least 16 characters)}
+      APP_URL: ${APP_URL:-http://localhost:3000}
+      CRON_SECRET: ${CRON_SECRET:-}
+      DEMO_ENABLED: ${DEMO_ENABLED:-1}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      # Empty means "use PGlite on the /data volume".
+      DATABASE_URL: ${DATABASE_URL:-}
+    volumes:
+      - dais-data:/data
+    restart: unless-stopped
+
+volumes:
+  dais-data:

@@ -1,0 +1,45 @@
+# Weekly, grouped dependency updates. The "npm" ecosystem covers pnpm lockfiles.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "07:00"
+      timezone: America/Cayman
+    open-pull-requests-limit: 5
+    groups:
+      production-dependencies:
+        dependency-type: production
+      development-dependencies:
+        dependency-type: development
+    labels: [dependencies]
+
+  # The Docker migration helper pins the same three packages as the app.
+  - package-ecosystem: npm
+    directory: /docker/migrate
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      migrate-helper:
+        patterns: ["*"]
+    labels: [dependencies]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    groups:
+      actions:
+        patterns: ["*"]
+    labels: [dependencies]
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    labels: [dependencies]

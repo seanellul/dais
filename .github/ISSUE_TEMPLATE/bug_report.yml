@@ -1,0 +1,63 @@
+name: Bug report
+description: Something did not work the way the docs say it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please never paste real names of debaters, judges or schools, or real scores. Use the demo tournament or invented data to reproduce the problem.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you do, what did you expect, and what happened instead?
+      placeholder: On the results page I set aside a score with a reason, and the rank did not update.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the demo tournament.
+        2. Go to Results, Open division.
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: request-id
+    attributes:
+      label: Request id (if an error was shown)
+      description: Error messages include a request id. It lets us find the matching log line.
+      placeholder: iad1::abcd1-1700000000000-0123456789ab
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where were you?
+      options:
+        - Organiser dashboard (laptop)
+        - Judge app on a phone
+        - Public page
+        - Command line or self-host
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Dais version or commit
+      placeholder: v1.0.0 or a commit hash
+  - type: input
+    id: device
+    attributes:
+      label: Browser and device
+      placeholder: Safari on iPhone 13, iOS 18; Chrome 129 on Windows
+  - type: dropdown
+    id: hosting
+    attributes:
+      label: How is Dais hosted?
+      options:
+        - Vercel + Neon
+        - Docker (PGlite)
+        - Docker (Postgres)
+        - pnpm dev on a laptop
+        - Not sure

@@ -1,0 +1,27 @@
+name: Feature request
+description: Something Dais should do for your tournament.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Describe the situation on the day, not the solution. Who is doing what, and where does it get stuck?
+      placeholder: Our tournament has four rounds and two judges per room, and the third round is a semi-final.
+    validations:
+      required: true
+  - type: textarea
+    id: rules
+    attributes:
+      label: Which tournament rule or habit is behind this?
+      description: If your tournament has written rules, quote the relevant line. Dais tries to make every rule a setting.
+  - type: textarea
+    id: today
+    attributes:
+      label: How do you handle it today?
+      placeholder: A spreadsheet, paper, a different app.
+  - type: textarea
+    id: idea
+    attributes:
+      label: Any idea how it could work in Dais?
+      description: Optional. Sketches and screenshots of paper forms are welcome, without real names.

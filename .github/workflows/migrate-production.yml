@@ -1,0 +1,72 @@
+# Applies committed SQL migrations to the production database on every push
+# to main, before the production deploy.
+#
+# Nothing happens unless the repository secret DATABASE_URL_PRODUCTION is set.
+# Use Neon's direct (non-pooled) connection string for this secret: DDL
+# through the pooler works for simple cases but the direct endpoint is what
+# Neon recommends for migrations.
+#
+# Deploy ordering: with Vercel's Git integration the production build starts
+# at the same moment as this workflow. To make the deploy wait for the
+# migration, turn off Git deploys for production (Ignored Build Step, see
+# README "Deploy to Vercel + Neon") and add the secret VERCEL_DEPLOY_HOOK_URL;
+# the last step then triggers the deploy only after the migration succeeded.
+# Migrations are never run from Vercel's buildCommand: preview builds would
+# migrate production.
+
+name: Migrate production database
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: migrate-production
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Is production configured?
+    runs-on: ubuntu-latest
+    outputs:
+      configured: ${{ steps.check.outputs.configured }}
+    steps:
+      - id: check
+        # Secrets are not readable in a job-level `if`, so this step exports
+        # a boolean the next job can read.
+        run: echo "configured=${{ secrets.DATABASE_URL_PRODUCTION != '' }}" >> "$GITHUB_OUTPUT"
+
+  migrate:
+    name: Migrate
+    needs: check
+    if: needs.check.outputs.configured == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Apply migrations
+        run: pnpm db:migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL_PRODUCTION }}
+          NODE_ENV: production
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET || 'migration-job-does-not-use-sessions' }}
+      - name: Trigger the Vercel production deploy
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -n "$DEPLOY_HOOK_URL" ]; then
+            curl -fsS -X POST "$DEPLOY_HOOK_URL" >/dev/null
+            echo "Deploy hook called."
+          else
+            echo "No VERCEL_DEPLOY_HOOK_URL secret; Vercel's Git integration deploys on its own."
+          fi

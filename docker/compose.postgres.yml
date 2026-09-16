@@ -1,0 +1,36 @@
+# Override that runs Dais on Postgres instead of the embedded PGlite database.
+#
+#   docker compose -f docker-compose.yml -f docker/compose.postgres.yml up -d
+#
+# The app waits for Postgres to report healthy, applies migrations, then
+# starts. Change the password before exposing this beyond a laptop.
+#
+# `sslmode=disable` matters: the app turns on verified TLS for every host that
+# is not localhost, and the postgres image has no certificate. Without it the
+# boot-time migration succeeds but every query from the app fails.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-dais}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dais}
+      POSTGRES_DB: ${POSTGRES_DB:-dais}
+    volumes:
+      - dais-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-dais} -d ${POSTGRES_DB:-dais}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  app:
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-dais}:${POSTGRES_PASSWORD:-dais}@postgres:5432/${POSTGRES_DB:-dais}?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  dais-postgres:

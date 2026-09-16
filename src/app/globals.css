@@ -1,133 +1,1018 @@
+/*
+ * Dais design tokens and base styles.
+ *
+ * Layers, from the bottom up:
+ *   1. Dais semantic tokens (--bg, --text, --primary, --success-surface, ...).
+ *      Four blocks: neutral light, neutral dark, ESU Cayman light, ESU Cayman dark.
+ *      Every block has specificity (0,1,0); source order decides precedence.
+ *   2. shadcn aliases (--background, --card, --ring, ...) that point at the Dais
+ *      tokens, so every shadcn component follows the active theme automatically.
+ *   3. `@theme inline` exposes both sets to Tailwind (`bg-surface`, `text-text-muted`,
+ *      `font-display`, ...).
+ *   4. Base element styles, type scale, and a few component classes.
+ *
+ * How a theme is chosen:
+ *   - Light or dark: next-themes puts `.dark` (or `.light`) on <html>.
+ *   - Neutral or ESU Cayman: data-theme="esu" on a wrapper element, set by the
+ *     organiser layout from the "dais-theme" cookie (src/ui/colour-theme-scope.tsx).
+ *     The root layout reads no cookie, so public and judge routes stay static.
+ *   - Presentation mode: <html data-presentation="on">.
+ *   - Inside a page, a panel can force a mode with data-mode="light|dark" and a
+ *     theme with data-theme="neutral|esu" (the design gallery uses both to show
+ *     all four combinations at once). data-mode resets the colours to neutral;
+ *     fonts follow data-theme.
+ *
+ * docs/DESIGN.md explains the token architecture and lists every token.
+ */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* `dark:` utilities apply inside <html class="dark"> or a data-mode="dark" panel, but
+   never inside a data-mode="light" panel. */
+@custom-variant dark (&:where(.dark, .dark *, [data-mode="dark"], [data-mode="dark"] *):not(:where([data-mode="light"], [data-mode="light"] *)));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+/* ------------------------------------------------------------------ */
+/* 1. Dais semantic tokens                                             */
+/* ------------------------------------------------------------------ */
+
+/* Neutral theme, light (default). This block is the master list: every other
+   theme block redefines a subset of these names. */
+:root,
+[data-mode="light"] {
+  color-scheme: light;
+
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-sunken: #eef1f4;
+  --surface-raised: #ffffff;
+
+  --text: #16202b;
+  --text-secondary: #46525f;
+  --text-muted: #5b6874;
+  --text-inverse: #ffffff;
+
+  --border: #d5dbe1;
+  --border-strong: #8b96a1;
+  --divider: #e6eaee;
+
+  --primary: #1f4e8c;
+  --primary-hover: #17407a;
+  --primary-surface: #e8f0fa;
+  --on-primary: #ffffff;
+
+  /* The one accent for the single primary action per screen. Equal to primary
+     in the neutral theme; coral in ESU Cayman. */
+  --action: #1f4e8c;
+  --action-hover: #17407a;
+  --on-action: #ffffff;
+
+  --link: #1f4e8c;
+  --accent-text: #1f4e8c;
+  --focus: #1f4e8c;
+
+  --success: #1f7a4d;
+  --success-surface: #e6f4ec;
+  --warning: #8a5a00;
+  --warning-surface: #fff4dc;
+  --danger: #b3261e;
+  --danger-surface: #fdecea;
+  --info: #1f4e8c;
+  --info-surface: #e8f0fa;
+
+  --side-gov: #1f4e8c;
+  --side-gov-surface: #e8f0fa;
+  --side-opp: #7a3b5e;
+  --side-opp-surface: #f6e9f0;
+
+  --highlight-surface: #fff8e6;
+  --on-highlight: #16202b;
+  --highlight-soft: #fffcf2;
+
+  --band-fill: #1f4e8c;
+
+  --topbar: #16202b;
+  --on-topbar: #ffffff;
+
+  /* Decorative only. Never used for text. */
+  --teal: #2cb8c9;
+  --teal-text: #167c8a;
+
+  /* Elevation. Borders carry structure; shadows are for raised panels only. */
+  --shadow-1: 0 1px 2px rgba(6, 22, 40, 0.06), 0 1px 3px rgba(6, 22, 40, 0.08);
+  --shadow-2: 0 4px 12px rgba(6, 22, 40, 0.1);
+  --shadow-3: 0 16px 40px rgba(6, 22, 40, 0.18);
 }
+
+/* Fonts follow the colour theme, not the mode, so a print sheet or a light
+   panel inside an ESU page keeps the ESU faces. The raw --font-* values are
+   set on <html> by next/font in layout.tsx. data-theme="neutral" restores
+   these inside an ESU page (the design gallery's neutral panels). */
+:root,
+[data-theme="neutral"] {
+  --font-sans-neutral: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
+  --font-sans-esu: var(--font-inter-tight, "Inter Tight"), ui-sans-serif, system-ui, sans-serif;
+  --type-body: var(--font-sans-neutral);
+  --type-display: var(--font-source-serif-4, "Source Serif 4"), Georgia, "Times New Roman", serif;
+  --type-display-alt:
+    var(--font-source-serif-4, "Source Serif 4"), Georgia, "Times New Roman", serif;
+  --type-mono:
+    var(--font-jetbrains-mono, "JetBrains Mono"), ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* Neutral theme, dark. */
+.dark,
+[data-mode="dark"] {
+  color-scheme: dark;
+
+  --bg: #0b1117;
+  --surface: #0f1720;
+  --surface-sunken: #0b1117;
+  --surface-raised: #16212c;
+
+  --text: #e8edf2;
+  --text-secondary: #b6c0cb;
+  --text-muted: #93a0ad;
+  --text-inverse: #0b1117;
+
+  --border: #2a3440;
+  /* Spec value #55636f is 2.92:1 on the surface; nudged to pass 3:1. */
+  --border-strong: #5e6d79;
+  --divider: #1f2933;
+
+  --primary: #7fb0f0;
+  --primary-hover: #9cc3f5;
+  --primary-surface: #212f41;
+  --on-primary: #0b1117;
+
+  --action: #7fb0f0;
+  --action-hover: #9cc3f5;
+  --on-action: #0b1117;
+
+  --link: #7fb0f0;
+  --accent-text: #7fb0f0;
+  --focus: #7fb0f0;
+
+  /* Status surfaces are 16% tints of the status colour over the surface. */
+  --success: #6fcf97;
+  --success-surface: #1e3433;
+  --warning: #f2c56b;
+  --warning-surface: #33332c;
+  --danger: #f28b82;
+  --danger-surface: #332a30;
+  --info: #7fb0f0;
+  --info-surface: #212f41;
+
+  --side-gov: #7fb0f0;
+  --side-gov-surface: #212f41;
+  --side-opp: #d79bc0;
+  --side-opp-surface: #2f2c3a;
+
+  --highlight-surface: #2e2a1a;
+  --on-highlight: #e8edf2;
+  --highlight-soft: #1c1a12;
+
+  --band-fill: #7fb0f0;
+
+  --topbar: #0f1720;
+  --on-topbar: #e8edf2;
+
+  --teal: #2cb8c9;
+  --teal-text: #5fd0dd;
+
+  /* Elevation in dark = a lighter surface, no shadows. */
+  --shadow-1: none;
+  --shadow-2: none;
+  --shadow-3: none;
+}
+
+/* ESU Cayman theme, light. Warm sand paper, navy ink, coral for the one action. */
+[data-theme="esu"] {
+  --bg: #f6f1e7;
+  --surface: #fffdf8;
+  --surface-sunken: #f2ece0;
+  --surface-raised: #fffdf8;
+
+  --text: #061628;
+  --text-secondary: #3d4b5c;
+  --text-muted: #5f6b78;
+  --text-inverse: #eef2f7;
+
+  --border: #e3dccd;
+  --border-strong: #8f887a;
+  --divider: #ebe5d8;
+
+  --primary: #0a2540;
+  --primary-hover: #061628;
+  --primary-surface: #e6ecf3;
+  --on-primary: #eef2f7;
+
+  --action: #e87f5a;
+  --action-hover: #de6f47;
+  --on-action: #061628;
+
+  --link: #b84d2a;
+  --accent-text: #b84d2a;
+  --focus: #0a2540;
+
+  --success: #1f7a4d;
+  --success-surface: #e6f4ec;
+  --warning: #8a5a00;
+  --warning-surface: #fff4dc;
+  --danger: #b3261e;
+  --danger-surface: #fdecea;
+  --info: #0a2540;
+  --info-surface: #e6ecf3;
+
+  --side-gov: #0a2540;
+  --side-gov-surface: #e6ecf3;
+  /* Spec value #b84d2a is 4.32:1 on its surface; darkened to pass 4.5:1. */
+  --side-opp: #ad4624;
+  --side-opp-surface: #fbe9e2;
+
+  --highlight-surface: #f2d9a4;
+  --on-highlight: #061628;
+  --highlight-soft: #faf0d9;
+
+  --band-fill: #e87f5a;
+
+  --topbar: #061628;
+  --on-topbar: #eef2f7;
+
+  --teal: #2cb8c9;
+  /* Spec value #167c8a is 4.35:1 on the sand page background; darkened to pass. */
+  --teal-text: #14707d;
+
+  --shadow-1: 0 1px 2px rgba(6, 22, 40, 0.06), 0 1px 3px rgba(6, 22, 40, 0.08);
+  --shadow-2: 0 4px 12px rgba(6, 22, 40, 0.1);
+  --shadow-3: 0 16px 40px rgba(6, 22, 40, 0.18);
+
+  --type-body: var(--font-sans-esu);
+  --type-display: var(--font-fraunces, "Fraunces"), Georgia, "Times New Roman", serif;
+  --type-display-alt:
+    var(--font-instrument-serif, "Instrument Serif"), Georgia, "Times New Roman", serif;
+}
+
+/* ESU Cayman theme, dark. Three ways to get here: data-theme on <html> next to
+   the .dark class, a gallery panel that forces dark mode, or a data-theme
+   wrapper anywhere under a dark <html> (unless that wrapper also forces light
+   mode). `:where()` keeps every selector at (0,1,0). */
+.dark:where([data-theme="esu"]),
+[data-mode="dark"]:where([data-theme="esu"]),
+:where(.dark) [data-theme="esu"]:where(:not([data-mode="light"])) {
+  color-scheme: dark;
+
+  --bg: #061628;
+  --surface: #0a2540;
+  --surface-sunken: #061628;
+  --surface-raised: #11315a;
+
+  --text: #eef2f7;
+  --text-secondary: #c9d4e0;
+  --text-muted: #a9b8cc;
+  --text-inverse: #061628;
+
+  --border: #1e3a5c;
+  --border-strong: #6b829c;
+  --divider: #16304f;
+
+  --primary: #2cb8c9;
+  --primary-hover: #4fc9d8;
+  --primary-surface: #0f3d56;
+  --on-primary: #061628;
+
+  --action: #e87f5a;
+  --action-hover: #ee9575;
+  --on-action: #061628;
+
+  --link: #2cb8c9;
+  --accent-text: #2cb8c9;
+  --focus: #2cb8c9;
+
+  --success: #6fcf97;
+  --success-surface: #1a404e;
+  --warning: #f2c56b;
+  --warning-surface: #2f3f47;
+  --danger: #f28b82;
+  --danger-surface: #2f354b;
+  --info: #2cb8c9;
+  --info-surface: #0f3d56;
+
+  --side-gov: #8fb8e8;
+  --side-gov-surface: #1f3d5b;
+  --side-opp: #f0a084;
+  --side-opp-surface: #2f394b;
+
+  --highlight-surface: #3a3320;
+  --on-highlight: #f2d9a4;
+  --highlight-soft: #241f14;
+
+  --band-fill: #e87f5a;
+
+  --topbar: #061628;
+  --on-topbar: #eef2f7;
+
+  --teal: #2cb8c9;
+  --teal-text: #5fd0dd;
+
+  --shadow-1: none;
+  --shadow-2: none;
+  --shadow-3: none;
+
+  --type-body: var(--font-sans-esu);
+  --type-display: var(--font-fraunces, "Fraunces"), Georgia, "Times New Roman", serif;
+  --type-display-alt:
+    var(--font-instrument-serif, "Instrument Serif"), Georgia, "Times New Roman", serif;
+}
+
+/* Tokens that do not change with the theme. */
+:root {
+  /* Spacing, 4px base. Tailwind's numeric scale (p-4 = 16px) agrees with it. */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* Motion. Reduced motion zeroes these below. */
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+  --dur-deliberate: 600ms;
+  --dur-shuffle: 1200ms;
+  --dur-fade: 120ms;
+
+  /* Layers. */
+  --z-sticky: 10;
+  --z-drawer: 20;
+  --z-dialog: 30;
+  --z-toast: 40;
+
+  /* Density. Presentation mode raises these. */
+  --row-h: 40px;
+  --control-h: 44px;
+  --chip-fs: 0.75rem;
+
+  /* Content widths. */
+  --width-organiser: 1200px;
+  --width-public: 720px;
+  --width-judge: 480px;
+}
+
+/* Presentation mode: 125% scale for a projector, comfortable density,
+   stronger borders, no level-1 shadows. Toggled by src/ui/presentation-toggle.tsx. */
+[data-presentation="on"] {
+  font-size: 20px;
+  --row-h: 52px;
+  --control-h: 48px;
+  --chip-fs: 0.8rem;
+  --border: var(--border-strong);
+  --shadow-1: none;
+}
+
+/* A theme wrapper or a mode panel sets its own --border and --shadow-1, and an
+   element's own token beats an inherited one, so the two overrides are
+   repeated for them. Specificity (0,2,0) puts them above every theme block. */
+[data-presentation="on"] :is([data-theme], [data-mode]) {
+  --border: var(--border-strong);
+  --shadow-1: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
+    --dur-deliberate: 0ms;
+    --dur-shuffle: 0ms;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 2. shadcn aliases                                                   */
+/* ------------------------------------------------------------------ */
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --background: var(--bg);
+  --foreground: var(--text);
+  --card: var(--surface);
+  --card-foreground: var(--text);
+  --popover: var(--surface-raised);
+  --popover-foreground: var(--text);
+  --primary-foreground: var(--on-primary);
+  --secondary: var(--surface-sunken);
+  --secondary-foreground: var(--text);
+  --muted: var(--surface-sunken);
+  --muted-foreground: var(--text-muted);
+  /* shadcn's "accent" is a quiet hover surface, not the Dais action colour. */
+  --accent: var(--primary-surface);
+  --accent-foreground: var(--text);
+  --destructive: var(--danger);
+  --destructive-foreground: var(--text-inverse);
+  --input: var(--border-strong);
+  --ring: var(--focus);
+  --chart-1: var(--side-gov);
+  --chart-2: var(--side-opp);
+  --chart-3: var(--success);
+  --chart-4: var(--warning);
+  --chart-5: var(--text-muted);
+  --sidebar: var(--surface);
+  --sidebar-foreground: var(--text);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--on-primary);
+  --sidebar-accent: var(--primary-surface);
+  --sidebar-accent-foreground: var(--text);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--focus);
+  --radius: var(--radius-lg);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* ------------------------------------------------------------------ */
+/* 3. Tailwind theme                                                   */
+/* ------------------------------------------------------------------ */
+
+/* Radii are `@theme static` so `var(--radius-md)` always resolves, even in CSS
+   that Tailwind does not scan. They also drive rounded-sm/md/lg/xl. */
+@theme static {
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-4xl: 32px;
+  --radius-pill: 999px;
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
 }
+
+@theme {
+  /* Type scale: size / line-height in px at a 16px root. */
+  --text-display-xl: 2.75rem;
+  --text-display-xl--line-height: 3rem;
+  --text-display-xl--letter-spacing: -0.01em;
+  --text-display: 2rem;
+  --text-display--line-height: 2.375rem;
+  --text-display--letter-spacing: -0.01em;
+  --text-h1: 1.75rem;
+  --text-h1--line-height: 2.125rem;
+  --text-h1--letter-spacing: -0.01em;
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.75rem;
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.5rem;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.75rem;
+  --text-body: 1rem;
+  --text-body--line-height: 1.5rem;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.25rem;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+  --text-caption--letter-spacing: 0.02em;
+  --text-numeral-xl: 3.5rem;
+  --text-numeral-xl--line-height: 3.75rem;
+  --text-numeral-lg: 2.5rem;
+  --text-numeral-lg--line-height: 2.75rem;
+  --text-numeral: 1.75rem;
+  --text-numeral--line-height: 2rem;
+  --text-mono: 0.875rem;
+  --text-mono--line-height: 1.25rem;
+}
+
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--type-body);
+  --font-sans-esu: var(--font-sans-esu);
+  --font-display: var(--type-display);
+  --font-display-alt: var(--type-display-alt);
+  --font-heading: var(--type-display);
+  --font-mono: var(--type-mono);
+
+  /* Dais colours, one utility per token: bg-surface, text-text-muted, border-border-strong ... */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-raised: var(--surface-raised);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-inverse: var(--text-inverse);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-divider: var(--divider);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-surface: var(--primary-surface);
+  --color-on-primary: var(--on-primary);
+  --color-action: var(--action);
+  --color-action-hover: var(--action-hover);
+  --color-on-action: var(--on-action);
+  --color-link: var(--link);
+  --color-accent-text: var(--accent-text);
+  --color-focus: var(--focus);
+  --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
+  --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
+  --color-danger: var(--danger);
+  --color-danger-surface: var(--danger-surface);
+  --color-info: var(--info);
+  --color-info-surface: var(--info-surface);
+  --color-side-gov: var(--side-gov);
+  --color-side-gov-surface: var(--side-gov-surface);
+  --color-side-opp: var(--side-opp);
+  --color-side-opp-surface: var(--side-opp-surface);
+  --color-highlight-surface: var(--highlight-surface);
+  --color-on-highlight: var(--on-highlight);
+  --color-highlight-soft: var(--highlight-soft);
+  --color-band-fill: var(--band-fill);
+  --color-topbar: var(--topbar);
+  --color-on-topbar: var(--on-topbar);
+  --color-teal: var(--teal);
+  --color-teal-text: var(--teal-text);
+
+  /* shadcn colours */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* Elevation utilities read the token at runtime, so dark mode and presentation
+   mode can switch shadows off. (Tailwind's own shadow-* inlines its value.) */
+@utility elevation-0 {
+  box-shadow: none;
+}
+@utility elevation-1 {
+  box-shadow: var(--shadow-1);
+}
+@utility elevation-2 {
+  box-shadow: var(--shadow-2);
+}
+@utility elevation-3 {
+  box-shadow: var(--shadow-3);
+}
+
+/* Eyebrow: the only place uppercase is allowed. */
+@utility text-eyebrow {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Minimum touch target on the judge phone. */
+@utility touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+/* ------------------------------------------------------------------ */
+/* 4. Base styles                                                      */
+/* ------------------------------------------------------------------ */
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
+  html,
+  [data-mode],
+  [data-theme] {
+    /* Re-read the body font wherever a theme wrapper or mode panel starts. */
+    font-family: var(--type-body);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Keep focused fields visible above a sticky action bar. */
+    scroll-padding-bottom: 6rem;
+  }
+
   body {
     @apply bg-background text-foreground;
+    font-size: 1rem;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern", "liga", "calt";
   }
-  button:not(:disabled), [role="button"]:not(:disabled) {
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--type-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  h1 {
+    font-size: 1.75rem;
+    line-height: 2.125rem;
+  }
+  h2 {
+    font-size: 1.375rem;
+    line-height: 1.75rem;
+  }
+  h3 {
+    font-size: 1.125rem;
+    line-height: 1.5rem;
+  }
+  h4,
+  h5,
+  h6 {
+    font-weight: 600;
+  }
+
+  /* Numbers line up everywhere numbers matter. */
+  table,
+  .tabular,
+  input[inputmode="numeric"],
+  input[inputmode="decimal"],
+  input[type="number"],
+  time,
+  kbd,
+  code,
+  pre {
+    font-variant-numeric: tabular-nums;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--type-mono);
+  }
+
+  a {
+    color: var(--link);
+    text-underline-offset: 0.15em;
+  }
+  a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+    letter-spacing: inherit;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-  html {
-    @apply font-sans;
+
+  /* One focus style for everything: 3px ring in the focus colour, 2px offset,
+     visible on every surface including dark. */
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--primary-surface);
+    color: var(--text);
+  }
+
+  /* Windows High Contrast: keep boundaries visible. */
+  @media (forced-colors: active) {
+    .chip,
+    .band-bar__segment,
+    .banner {
+      border: 1px solid CanvasText;
+    }
+    .band-bar__segment[data-filled="true"] {
+      background: CanvasText;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* 5. Component classes shared by src/ui                               */
+/* ------------------------------------------------------------------ */
+
+@layer components {
+  /* Skip link: hidden until focused, then pinned top-left. */
+  .skip-link {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-2);
+    z-index: calc(var(--z-toast) + 1);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: var(--on-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transform: translateY(-200%);
+    transition: transform var(--dur-fast) var(--ease-standard);
+  }
+  .skip-link:focus-visible {
+    transform: translateY(0);
+  }
+
+  /* ActionButton: the one accent button per screen. A component class, not
+     utilities, so the colour survives whatever className a caller adds
+     (src/ui/cn.ts explains the merge trap). md = --control-h (44px), lg = 56px. */
+  .action-button {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    height: var(--control-h);
+    padding: 0 var(--space-5);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--action);
+    color: var(--on-action);
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    user-select: none;
+    transition:
+      background-color var(--dur-fast) var(--ease-standard),
+      transform var(--dur-fast) var(--ease-standard);
+  }
+  .action-button[data-size="lg"] {
+    height: 56px;
+    padding: 0 var(--space-6);
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+  .action-button:hover {
+    background: var(--action-hover);
+  }
+  .action-button:active {
+    transform: translateY(1px);
+  }
+  .action-button:disabled,
+  .action-button[aria-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  .action-button > svg {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    pointer-events: none;
+  }
+
+  /* StatusChip. Colour is never the only signal: an icon and text sit inside. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: 1.5rem;
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-pill);
+    border: 1px solid transparent;
+    font-size: var(--chip-fs);
+    line-height: 1rem;
+    font-weight: 500;
+    white-space: nowrap;
+    color: var(--chip-fg);
+    background: var(--chip-bg);
+    border-color: var(--chip-border);
+  }
+  .chip[data-variant="neutral"] {
+    --chip-fg: var(--text-secondary);
+    --chip-bg: var(--surface-sunken);
+    --chip-border: var(--border);
+  }
+  .chip[data-variant="success"] {
+    --chip-fg: var(--success);
+    --chip-bg: var(--success-surface);
+    --chip-border: transparent;
+  }
+  .chip[data-variant="warning"] {
+    --chip-fg: var(--warning);
+    --chip-bg: var(--warning-surface);
+    --chip-border: transparent;
+  }
+  .chip[data-variant="danger"] {
+    --chip-fg: var(--danger);
+    --chip-bg: var(--danger-surface);
+    --chip-border: transparent;
+  }
+  .chip[data-variant="info"] {
+    --chip-fg: var(--info);
+    --chip-bg: var(--info-surface);
+    --chip-border: transparent;
+  }
+  .chip[data-variant="muted-struck"] {
+    --chip-fg: var(--text-muted);
+    --chip-bg: transparent;
+    --chip-border: var(--border);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+  .chip > svg {
+    flex: none;
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  /* Side and role tags. */
+  .side-tag,
+  .role-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: 1.5rem;
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-sm);
+    font-size: var(--chip-fs);
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+  .side-tag[data-side="government"] {
+    color: var(--side-gov);
+    background: var(--side-gov-surface);
+  }
+  .side-tag[data-side="opposition"] {
+    color: var(--side-opp);
+    background: var(--side-opp-surface);
+  }
+  .role-tag {
+    color: var(--text-secondary);
+    background: var(--surface-sunken);
+    border: 1px solid var(--border);
+    font-family: var(--type-mono);
+    letter-spacing: 0.04em;
+  }
+
+  /* BandBar: five segments, one hue, filled up to the active band. */
+  .band-bar {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 3px;
+    height: 8px;
+  }
+  .band-bar__segment {
+    border-radius: 2px;
+    background: var(--surface-sunken);
+    border: 1px solid var(--border);
+    transition: background-color var(--dur-base) var(--ease-standard);
+  }
+  .band-bar__segment[data-filled="true"] {
+    background: var(--band-fill);
+    border-color: var(--band-fill);
+  }
+
+  /* Banner: a full-width strip with role=status. */
+  .banner {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--banner-border);
+    background: var(--banner-bg);
+    color: var(--banner-fg);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  .banner > svg {
+    flex: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 1px;
+  }
+  .banner[data-kind="provisional"] {
+    --banner-bg: var(--highlight-surface);
+    --banner-fg: var(--on-highlight);
+    --banner-border: transparent;
+  }
+  .banner[data-kind="offline"] {
+    --banner-bg: var(--warning-surface);
+    --banner-fg: var(--text);
+    --banner-border: transparent;
+  }
+  .banner[data-kind="sandbox"] {
+    --banner-bg: var(--info-surface);
+    --banner-fg: var(--text);
+    --banner-border: transparent;
+  }
+  .banner[data-kind="readonly"] {
+    --banner-bg: var(--surface-sunken);
+    --banner-fg: var(--text-secondary);
+    --banner-border: var(--border);
+  }
+  .banner[data-kind="info"] {
+    --banner-bg: var(--surface);
+    --banner-fg: var(--text);
+    --banner-border: var(--border);
+  }
+
+  /* Large numerals share one treatment. */
+  .numeral {
+    font-family: var(--type-display-alt);
+    font-variant-numeric: tabular-nums lining-nums;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  /* PrintPage: an A4 sheet on screen; print.css strips the chrome. */
+  .print-page {
+    background: #ffffff;
+    color: #000000;
+    width: 100%;
+    max-width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 14mm;
+    box-shadow: var(--shadow-2);
+    border: 1px solid var(--border);
+  }
+  .print-page[data-orientation="landscape"] {
+    max-width: 297mm;
+    min-height: 210mm;
+  }
+  .print-page__header,
+  .print-page__footer {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #333333;
+  }
+  .print-page__header {
+    border-bottom: 1px solid #000000;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-6);
+  }
+  .print-page__footer {
+    border-top: 1px solid #000000;
+    padding-top: var(--space-2);
+    margin-top: var(--space-6);
+  }
+  .print-page__stamp {
+    display: inline-block;
+    padding: 1px var(--space-2);
+    border: 1px solid #000000;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 }

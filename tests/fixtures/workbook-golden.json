@@ -1,0 +1,3419 @@
+{
+  "title": "Dais workbook golden fixture",
+  "description": "Forty invented debaters, three rounds, up to five judges per round. Expected values come from the test-only Excel emulator (AVERAGE, STDEV.S, AVERAGEIFS with strict text criteria, SUM, RANK.EQ). Regenerate with tests/fixtures/generate-workbook-golden.ts.",
+  "generator": "tests/fixtures/generate-workbook-golden.ts",
+  "seed": 20260916,
+  "rounds": [1, 2, 3],
+  "slotsPerRound": 5,
+  "policy": {
+    "sdMultiplier": 2,
+    "bounds": "strict",
+    "scope": "pooled",
+    "passes": "one",
+    "sd": "sample",
+    "whenUndefined": "unresolved",
+    "zeroSpread": "unresolved",
+    "excelCriteriaRounding": true
+  },
+  "judges": [
+    {
+      "id": "judge-01",
+      "code": "J01",
+      "name": "Ada Winterbourne"
+    },
+    {
+      "id": "judge-02",
+      "code": "J02",
+      "name": "Rowan Falconer"
+    },
+    {
+      "id": "judge-03",
+      "code": "J03",
+      "name": "Imogen Castellane"
+    },
+    {
+      "id": "judge-04",
+      "code": "J04",
+      "name": "Bartholomew Nightingale"
+    },
+    {
+      "id": "judge-05",
+      "code": "J05",
+      "name": "Clemency Holloway"
+    },
+    {
+      "id": "judge-06",
+      "code": "J06",
+      "name": "Digby Marchbanks"
+    },
+    {
+      "id": "judge-07",
+      "code": "J07",
+      "name": "Eulalie Trask"
+    },
+    {
+      "id": "judge-08",
+      "code": "J08",
+      "name": "Fitzgerald Amory"
+    },
+    {
+      "id": "judge-09",
+      "code": "J09",
+      "name": "Ginevra Stoke"
+    },
+    {
+      "id": "judge-10",
+      "code": "J10",
+      "name": "Horatio Blunt"
+    },
+    {
+      "id": "judge-11",
+      "code": "J11",
+      "name": "Isadora Fenn"
+    },
+    {
+      "id": "judge-12",
+      "code": "J12",
+      "name": "Jocelyn Pryor"
+    },
+    {
+      "id": "judge-13",
+      "code": "J13",
+      "name": "Kasimir Wolde"
+    },
+    {
+      "id": "judge-14",
+      "code": "J14",
+      "name": "Lettice Barrow"
+    },
+    {
+      "id": "judge-15",
+      "code": "J15",
+      "name": "Montague Reeve"
+    }
+  ],
+  "teams": [
+    {
+      "id": "team-01",
+      "code": "O01",
+      "name": "Harbourview A",
+      "school": "Harbourview Academy",
+      "debaterIds": ["d-01", "d-02"]
+    },
+    {
+      "id": "team-02",
+      "code": "O02",
+      "name": "Northgate A",
+      "school": "Northgate School",
+      "debaterIds": ["d-03", "d-04"]
+    },
+    {
+      "id": "team-03",
+      "code": "O03",
+      "name": "Saltmarsh A",
+      "school": "Saltmarsh College",
+      "debaterIds": ["d-05", "d-06"]
+    },
+    {
+      "id": "team-04",
+      "code": "O04",
+      "name": "Ridgeway A",
+      "school": "Ridgeway High",
+      "debaterIds": ["d-07", "d-08"]
+    },
+    {
+      "id": "team-05",
+      "code": "O05",
+      "name": "Lantern A",
+      "school": "Lantern Hill School",
+      "debaterIds": ["d-09", "d-10"]
+    },
+    {
+      "id": "team-06",
+      "code": "O06",
+      "name": "Cedarbrook A",
+      "school": "Cedarbrook Academy",
+      "debaterIds": ["d-11", "d-12"]
+    },
+    {
+      "id": "team-07",
+      "code": "O07",
+      "name": "Kingfisher A",
+      "school": "Kingfisher School",
+      "debaterIds": ["d-13", "d-14"]
+    },
+    {
+      "id": "team-08",
+      "code": "O08",
+      "name": "Westmere A",
+      "school": "Westmere College",
+      "debaterIds": ["d-15", "d-16"]
+    },
+    {
+      "id": "team-09",
+      "code": "O09",
+      "name": "Palmgrove A",
+      "school": "Palmgrove High",
+      "debaterIds": ["d-17", "d-18"]
+    },
+    {
+      "id": "team-10",
+      "code": "O10",
+      "name": "Coral A",
+      "school": "Coral Bay School",
+      "debaterIds": ["d-19", "d-20"]
+    },
+    {
+      "id": "team-11",
+      "code": "O11",
+      "name": "Harbourview B",
+      "school": "Harbourview Academy",
+      "debaterIds": ["d-21", "d-22"]
+    },
+    {
+      "id": "team-12",
+      "code": "O12",
+      "name": "Northgate B",
+      "school": "Northgate School",
+      "debaterIds": ["d-23", "d-24"]
+    },
+    {
+      "id": "team-13",
+      "code": "O13",
+      "name": "Saltmarsh B",
+      "school": "Saltmarsh College",
+      "debaterIds": ["d-25", "d-26"]
+    },
+    {
+      "id": "team-14",
+      "code": "O14",
+      "name": "Ridgeway B",
+      "school": "Ridgeway High",
+      "debaterIds": ["d-27", "d-28"]
+    },
+    {
+      "id": "team-15",
+      "code": "O15",
+      "name": "Lantern B",
+      "school": "Lantern Hill School",
+      "debaterIds": ["d-29", "d-30"]
+    },
+    {
+      "id": "team-16",
+      "code": "O16",
+      "name": "Cedarbrook B",
+      "school": "Cedarbrook Academy",
+      "debaterIds": ["d-31", "d-32"]
+    },
+    {
+      "id": "team-17",
+      "code": "O17",
+      "name": "Kingfisher B",
+      "school": "Kingfisher School",
+      "debaterIds": ["d-33", "d-34"]
+    },
+    {
+      "id": "team-18",
+      "code": "O18",
+      "name": "Westmere B",
+      "school": "Westmere College",
+      "debaterIds": ["d-35", "d-36"]
+    },
+    {
+      "id": "team-19",
+      "code": "O19",
+      "name": "Palmgrove B",
+      "school": "Palmgrove High",
+      "debaterIds": ["d-37", "d-38"]
+    },
+    {
+      "id": "team-20",
+      "code": "O20",
+      "name": "Coral B",
+      "school": "Coral Bay School",
+      "debaterIds": ["d-39", "d-40"]
+    }
+  ],
+  "debaters": [
+    {
+      "id": "d-01",
+      "name": "Aurelia Ashcombe",
+      "teamId": "team-01",
+      "position": 1
+    },
+    {
+      "id": "d-02",
+      "name": "Bram Brightwater",
+      "teamId": "team-01",
+      "position": 2
+    },
+    {
+      "id": "d-03",
+      "name": "Cassia Calloway",
+      "teamId": "team-02",
+      "position": 1
+    },
+    {
+      "id": "d-04",
+      "name": "Dorian Dunmore",
+      "teamId": "team-02",
+      "position": 2
+    },
+    {
+      "id": "d-05",
+      "name": "Elowen Everleigh",
+      "teamId": "team-03",
+      "position": 1
+    },
+    {
+      "id": "d-06",
+      "name": "Fenwick Fairweather",
+      "teamId": "team-03",
+      "position": 2
+    },
+    {
+      "id": "d-07",
+      "name": "Gilda Greyson",
+      "teamId": "team-04",
+      "position": 1
+    },
+    {
+      "id": "d-08",
+      "name": "Hollis Hawthorne",
+      "teamId": "team-04",
+      "position": 2
+    },
+    {
+      "id": "d-09",
+      "name": "Isolde Inglewood",
+      "teamId": "team-05",
+      "position": 1
+    },
+    {
+      "id": "d-10",
+      "name": "Jasper Kestrel",
+      "teamId": "team-05",
+      "position": 2
+    },
+    {
+      "id": "d-11",
+      "name": "Kerensa Lockridge",
+      "teamId": "team-06",
+      "position": 1
+    },
+    {
+      "id": "d-12",
+      "name": "Lucian Merriweather",
+      "teamId": "team-06",
+      "position": 2
+    },
+    {
+      "id": "d-13",
+      "name": "Marigold Northcote",
+      "teamId": "team-07",
+      "position": 1
+    },
+    {
+      "id": "d-14",
+      "name": "Nestor Oakhurst",
+      "teamId": "team-07",
+      "position": 2
+    },
+    {
+      "id": "d-15",
+      "name": "Ottilie Pemberton",
+      "teamId": "team-08",
+      "position": 1
+    },
+    {
+      "id": "d-16",
+      "name": "Perrin Quennell",
+      "teamId": "team-08",
+      "position": 2
+    },
+    {
+      "id": "d-17",
+      "name": "Quilla Ravenscroft",
+      "teamId": "team-09",
+      "position": 1
+    },
+    {
+      "id": "d-18",
+      "name": "Rafferty Silverton",
+      "teamId": "team-09",
+      "position": 2
+    },
+    {
+      "id": "d-19",
+      "name": "Sabine Thornbury",
+      "teamId": "team-10",
+      "position": 1
+    },
+    {
+      "id": "d-20",
+      "name": "Tobias Underhill",
+      "teamId": "team-10",
+      "position": 2
+    },
+    {
+      "id": "d-21",
+      "name": "Ulla Ashcombe",
+      "teamId": "team-11",
+      "position": 1
+    },
+    {
+      "id": "d-22",
+      "name": "Vesper Brightwater",
+      "teamId": "team-11",
+      "position": 2
+    },
+    {
+      "id": "d-23",
+      "name": "Wilfred Calloway",
+      "teamId": "team-12",
+      "position": 1
+    },
+    {
+      "id": "d-24",
+      "name": "Xanthe Dunmore",
+      "teamId": "team-12",
+      "position": 2
+    },
+    {
+      "id": "d-25",
+      "name": "Yorick Everleigh",
+      "teamId": "team-13",
+      "position": 1
+    },
+    {
+      "id": "d-26",
+      "name": "Zelda Fairweather",
+      "teamId": "team-13",
+      "position": 2
+    },
+    {
+      "id": "d-27",
+      "name": "Ambrose Greyson",
+      "teamId": "team-14",
+      "position": 1
+    },
+    {
+      "id": "d-28",
+      "name": "Beatrix Hawthorne",
+      "teamId": "team-14",
+      "position": 2
+    },
+    {
+      "id": "d-29",
+      "name": "Cormac Inglewood",
+      "teamId": "team-15",
+      "position": 1
+    },
+    {
+      "id": "d-30",
+      "name": "Delphine Kestrel",
+      "teamId": "team-15",
+      "position": 2
+    },
+    {
+      "id": "d-31",
+      "name": "Evander Lockridge",
+      "teamId": "team-16",
+      "position": 1
+    },
+    {
+      "id": "d-32",
+      "name": "Fern Merriweather",
+      "teamId": "team-16",
+      "position": 2
+    },
+    {
+      "id": "d-33",
+      "name": "Gideon Northcote",
+      "teamId": "team-17",
+      "position": 1
+    },
+    {
+      "id": "d-34",
+      "name": "Harriet Oakhurst",
+      "teamId": "team-17",
+      "position": 2
+    },
+    {
+      "id": "d-35",
+      "name": "Ignatius Pemberton",
+      "teamId": "team-18",
+      "position": 1
+    },
+    {
+      "id": "d-36",
+      "name": "Juniper Quennell",
+      "teamId": "team-18",
+      "position": 2
+    },
+    {
+      "id": "d-37",
+      "name": "Kit Ravenscroft",
+      "teamId": "team-19",
+      "position": 1
+    },
+    {
+      "id": "d-38",
+      "name": "Leopold Silverton",
+      "teamId": "team-19",
+      "position": 2
+    },
+    {
+      "id": "d-39",
+      "name": "Maude Thornbury",
+      "teamId": "team-20",
+      "position": 1
+    },
+    {
+      "id": "d-40",
+      "name": "Nico Underhill",
+      "teamId": "team-20",
+      "position": 2
+    }
+  ],
+  "rows": [
+    {
+      "debaterId": "d-01",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 66
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-12",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 68
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 70
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 67
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 71
+          },
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-02",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 81
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-12",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 82
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 86
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 86
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 81
+          },
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-03",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 88
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 84
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-15",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 87
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 94
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-09",
+            "value": 92
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 88
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 87
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 92
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 85
+          }
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-04",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 78
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-15",
+            "value": 68
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 78
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-09",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 69
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 63
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 76
+          }
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-05",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-10",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 78
+          },
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 81
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-08",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 83
+          },
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-06",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-10",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 79
+          },
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 77
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-08",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 78
+          },
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-07",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 71
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 71
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 67
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 103
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-08",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 58
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 58
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 65
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 61
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 63
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 61
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 64
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 68
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 57
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 58
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 56
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-09",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 70
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 73
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 72
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 66
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 66
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-10",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 76
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 79
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 77
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-11",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 88
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 90
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 88
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 90
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 40
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 83
+          },
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-12",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 78
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 75
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 75
+          },
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-13",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 87
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 79
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-14",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 75
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 83
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-14",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 86
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 84
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-14",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 77
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 91
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 86
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-15",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 84
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-14",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 80
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 81
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-16",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 66
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 69
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-14",
+            "value": 68
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 64
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 62
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 65
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 70
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 65
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-17",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-03",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 73
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 83
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 78
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 82
+          }
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-18",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-03",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 76
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 79
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 80
+          }
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-19",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 76
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 81
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 80
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-20",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 67
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 74
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 67
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 70
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 73
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-21",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-15",
+            "value": 70
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 78
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 73
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-15",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 71
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-03",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 71
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-22",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-15",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 65
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 76
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-15",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 73
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-03",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 74
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-23",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 82
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-08",
+            "value": 78
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 78
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 74
+          }
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-24",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 65
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 65
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 64
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-08",
+            "value": 66
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 70
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 59
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 69
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 68
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-13",
+            "value": 70
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 70
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 68
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 67
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 66
+          }
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-25",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-14",
+            "value": 86
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 87
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 89
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 83
+          },
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 89
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 83
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 85
+          },
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-26",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-14",
+            "value": 67
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 61
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 65
+          },
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 63
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 68
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 69
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 63
+          },
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-27",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 78
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 77
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 83
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-28",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 71
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 65
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 76
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-02",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 70
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 73
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-29",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 63
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 65
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 63
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 65
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 69
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 69
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-15",
+            "value": 59
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 67
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 67
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-30",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 86
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 87
+          },
+          {
+            "judgeId": "judge-09",
+            "value": 87
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 87
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 88
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 95
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 89
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-15",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 88
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 91
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-31",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-08",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 78
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 78
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 83
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-08",
+            "value": 87
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 86
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-14",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 87
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-32",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-08",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-14",
+            "value": 78
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 76
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-08",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 82
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 83
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-14",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 83
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 84
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-33",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-09",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 73
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 68
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 103
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-34",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-09",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 90
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 86
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 88
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 88
+          },
+          null,
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 89
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 89
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-35",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 63
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 64
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 66
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 62
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 72
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 59
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 69
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 68
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-03",
+            "value": 68
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 64
+          },
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-36",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-15",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 74
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-01",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-05",
+            "value": 70
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-03",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 75
+          },
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-37",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-09",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 77
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 75
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 78
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 85
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 79
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-38",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-09",
+            "value": 77
+          },
+          {
+            "judgeId": "judge-10",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-13",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 81
+          },
+          {
+            "judgeId": "judge-11",
+            "value": 80
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-11",
+            "value": 79
+          },
+          {
+            "judgeId": "judge-03",
+            "value": 84
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 84
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-06",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 83
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-39",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 86
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 90
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 90
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 87
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 88
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 89
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 83
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 90
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 85
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 40
+          },
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "debaterId": "d-40",
+      "rounds": [
+        [
+          {
+            "judgeId": "judge-04",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-12",
+            "value": 76
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 71
+          },
+          null,
+          null
+        ],
+        [
+          {
+            "judgeId": "judge-06",
+            "value": 71
+          },
+          {
+            "judgeId": "judge-07",
+            "value": 74
+          },
+          {
+            "judgeId": "judge-02",
+            "value": 72
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-01",
+            "value": 72
+          }
+        ],
+        [
+          {
+            "judgeId": "judge-05",
+            "value": 80
+          },
+          {
+            "judgeId": "judge-04",
+            "value": 73
+          },
+          {
+            "judgeId": "judge-08",
+            "value": 74
+          },
+          null,
+          null
+        ]
+      ]
+    }
+  ],
+  "expected": {
+    "debaters": [
+      {
+        "id": "d-01",
+        "mean": 70.66666666666667,
+        "sd": 3.278719262151,
+        "upper": 77.22410519096867,
+        "lower": 64.10922814236467,
+        "roundAverages": [69.5, 71.33333333333333, 70.75],
+        "roundRanks": [34, 31, 32],
+        "total": 211.58333333333331,
+        "rank": 34,
+        "setAside": []
+      },
+      {
+        "id": "d-02",
+        "mean": 83.33333333333333,
+        "sd": 2.1213203435596424,
+        "upper": 87.57597402045262,
+        "lower": 79.09069264621404,
+        "roundAverages": [82.5, 82.66666666666667, 84.25],
+        "roundRanks": [9, 8, 8],
+        "total": 249.41666666666669,
+        "rank": 8,
+        "setAside": []
+      },
+      {
+        "id": "d-03",
+        "mean": 87.81818181818181,
+        "sd": 3.4588489940493736,
+        "upper": 94.73587980628056,
+        "lower": 80.90048383008306,
+        "roundAverages": [85.33333333333333, 88.66666666666667, 88.8],
+        "roundRanks": [6, 1, 2],
+        "total": 262.8,
+        "rank": 2,
+        "setAside": []
+      },
+      {
+        "id": "d-04",
+        "mean": 72.9090909090909,
+        "sd": 4.742458127480841,
+        "upper": 82.3940071640526,
+        "lower": 63.424174654129224,
+        "roundAverages": [75.33333333333333, 72.33333333333333, 74],
+        "roundRanks": [21, 28, 25],
+        "total": 221.66666666666666,
+        "rank": 24,
+        "setAside": [
+          {
+            "round": 3,
+            "judgeId": "judge-15",
+            "value": 63
+          }
+        ]
+      },
+      {
+        "id": "d-05",
+        "mean": 80,
+        "sd": 3.122498999199199,
+        "upper": 86.2449979983984,
+        "lower": 73.7550020016016,
+        "roundAverages": [80.33333333333333, 81.33333333333333, 81],
+        "roundRanks": [13, 12, 13],
+        "total": 242.66666666666666,
+        "rank": 13,
+        "setAside": [
+          {
+            "round": 1,
+            "judgeId": "judge-01",
+            "value": 73
+          }
+        ]
+      },
+      {
+        "id": "d-06",
+        "mean": 76.88888888888889,
+        "sd": 2.8480012484391772,
+        "upper": 82.58489138576724,
+        "lower": 71.19288639201054,
+        "roundAverages": [74.75, 78.66666666666667, 78.5],
+        "roundRanks": [25, 16, 19],
+        "total": 231.91666666666669,
+        "rank": 21,
+        "setAside": []
+      },
+      {
+        "id": "d-07",
+        "mean": 76.36363636363636,
+        "sd": 9.584077704951346,
+        "upper": 95.53179177353906,
+        "lower": 57.195480953733664,
+        "roundAverages": [75.2, 74.33333333333333, 69],
+        "roundRanks": [23, 24, 33],
+        "total": 218.53333333333333,
+        "rank": 29,
+        "setAside": [
+          {
+            "round": 3,
+            "judgeId": "judge-13",
+            "value": 103
+          }
+        ]
+      },
+      {
+        "id": "d-08",
+        "mean": 60.81818181818182,
+        "sd": 3.8162332690280296,
+        "upper": 68.45064835623788,
+        "lower": 53.18571528012576,
+        "roundAverages": [61, 64.33333333333333, 57],
+        "roundRanks": [40, 40, 40],
+        "total": 182.33333333333331,
+        "rank": 40,
+        "setAside": []
+      },
+      {
+        "id": "d-09",
+        "mean": 71.33333333333333,
+        "sd": 3.4641016151377544,
+        "upper": 78.26153656360884,
+        "lower": 64.40513010305781,
+        "roundAverages": [72.66666666666667, 72.33333333333333, 69],
+        "roundRanks": [30, 28, 33],
+        "total": 214,
+        "rank": 32,
+        "setAside": []
+      },
+      {
+        "id": "d-10",
+        "mean": 75.33333333333333,
+        "sd": 2.0615528128088303,
+        "upper": 79.45643895895098,
+        "lower": 71.21022770771567,
+        "roundAverages": [75.33333333333333, 76, 74.66666666666667],
+        "roundRanks": [21, 22, 23],
+        "total": 226,
+        "rank": 23,
+        "setAside": []
+      },
+      {
+        "id": "d-11",
+        "mean": 81,
+        "sd": 15.668439615992398,
+        "upper": 112.3368792319848,
+        "lower": 49.663120768015204,
+        "roundAverages": [87.33333333333333, 86, 85],
+        "roundRanks": [1, 5, 6],
+        "total": 258.3333333333333,
+        "rank": 5,
+        "setAside": [
+          {
+            "round": 3,
+            "judgeId": "judge-13",
+            "value": 40
+          }
+        ]
+      },
+      {
+        "id": "d-12",
+        "mean": 78.11111111111111,
+        "sd": 3.3333333333333335,
+        "upper": 84.77777777777779,
+        "lower": 71.44444444444444,
+        "roundAverages": [78.66666666666667, 74.5, 79.5],
+        "roundRanks": [18, 23, 17],
+        "total": 232.66666666666669,
+        "rank": 20,
+        "setAside": []
+      },
+      {
+        "id": "d-13",
+        "mean": 80.22222222222223,
+        "sd": 4.1163630117428225,
+        "upper": 88.45494824570787,
+        "lower": 71.98949619873659,
+        "roundAverages": [80.66666666666667, 77.66666666666667, 82.33333333333333],
+        "roundRanks": [10, 18, 9],
+        "total": 240.66666666666669,
+        "rank": 14,
+        "setAside": []
+      },
+      {
+        "id": "d-14",
+        "mean": 83.88888888888889,
+        "sd": 3.9510898637098992,
+        "upper": 91.79106861630868,
+        "lower": 75.9867091614691,
+        "roundAverages": [83.33333333333333, 81.66666666666667, 86.66666666666667],
+        "roundRanks": [7, 11, 5],
+        "total": 251.66666666666669,
+        "rank": 7,
+        "setAside": []
+      },
+      {
+        "id": "d-15",
+        "mean": 81.44444444444444,
+        "sd": 2.0069324297987157,
+        "upper": 85.45830930404188,
+        "lower": 77.43057958484701,
+        "roundAverages": [82.66666666666667, 81, 80.66666666666667],
+        "roundRanks": [8, 13, 15],
+        "total": 244.33333333333337,
+        "rank": 10,
+        "setAside": []
+      },
+      {
+        "id": "d-16",
+        "mean": 66.88888888888889,
+        "sd": 3.4075080500434787,
+        "upper": 73.70390498897584,
+        "lower": 60.07387278880193,
+        "roundAverages": [69.33333333333333, 64.66666666666667, 66.66666666666667],
+        "roundRanks": [35, 39, 36],
+        "total": 200.66666666666669,
+        "rank": 36,
+        "setAside": []
+      },
+      {
+        "id": "d-17",
+        "mean": 77.5,
+        "sd": 3.1710495984067415,
+        "upper": 83.84209919681348,
+        "lower": 71.15790080318652,
+        "roundAverages": [75, 77.66666666666667, 78.4],
+        "roundRanks": [24, 18, 20],
+        "total": 231.0666666666667,
+        "rank": 22,
+        "setAside": []
+      },
+      {
+        "id": "d-18",
+        "mean": 78.2,
+        "sd": 3.489667287547307,
+        "upper": 85.17933457509461,
+        "lower": 71.22066542490539,
+        "roundAverages": [75.5, 80.33333333333333, 78],
+        "roundRanks": [20, 14, 22],
+        "total": 233.83333333333331,
+        "rank": 19,
+        "setAside": []
+      },
+      {
+        "id": "d-19",
+        "mean": 78.77777777777777,
+        "sd": 2.1081851067789197,
+        "upper": 82.99414799133561,
+        "lower": 74.56140756421993,
+        "roundAverages": [77.33333333333333, 79.33333333333333, 79.66666666666667],
+        "roundRanks": [19, 15, 16],
+        "total": 236.33333333333331,
+        "rank": 16,
+        "setAside": []
+      },
+      {
+        "id": "d-20",
+        "mean": 71.11111111111111,
+        "sd": 2.713136766016618,
+        "upper": 76.53738464314435,
+        "lower": 65.68483757907788,
+        "roundAverages": [70.66666666666667, 70.33333333333333, 72.33333333333333],
+        "roundRanks": [33, 33, 31],
+        "total": 213.33333333333331,
+        "rank": 33,
+        "setAside": []
+      },
+      {
+        "id": "d-21",
+        "mean": 73.6,
+        "sd": 2.590581230363393,
+        "upper": 78.78116246072678,
+        "lower": 68.41883753927321,
+        "roundAverages": [74.4, 73, 72.66666666666667],
+        "roundRanks": [27, 25, 30],
+        "total": 220.06666666666666,
+        "rank": 26,
+        "setAside": []
+      },
+      {
+        "id": "d-22",
+        "mean": 72.7,
+        "sd": 3.368151487751768,
+        "upper": 79.43630297550354,
+        "lower": 65.96369702449647,
+        "roundAverages": [74.5, 72, 73.33333333333333],
+        "roundRanks": [26, 30, 28],
+        "total": 219.83333333333331,
+        "rank": 27,
+        "setAside": [
+          {
+            "round": 1,
+            "judgeId": "judge-13",
+            "value": 65
+          }
+        ]
+      },
+      {
+        "id": "d-23",
+        "mean": 78,
+        "sd": 3.1885210782848317,
+        "upper": 84.37704215656966,
+        "lower": 71.62295784343034,
+        "roundAverages": [80.33333333333333, 76.4, 78.2],
+        "roundRanks": [13, 21, 21],
+        "total": 234.93333333333334,
+        "rank": 17,
+        "setAside": []
+      },
+      {
+        "id": "d-24",
+        "mean": 66.6923076923077,
+        "sd": 3.0925883276153274,
+        "upper": 72.87748434753834,
+        "lower": 60.50713103707704,
+        "roundAverages": [64.66666666666667, 68.25, 68.2],
+        "roundRanks": [39, 36, 35],
+        "total": 201.11666666666667,
+        "rank": 35,
+        "setAside": [
+          {
+            "round": 2,
+            "judgeId": "judge-15",
+            "value": 59
+          }
+        ]
+      },
+      {
+        "id": "d-25",
+        "mean": 85.66666666666667,
+        "sd": 2.29128784747792,
+        "upper": 90.2492423616225,
+        "lower": 81.08409097171084,
+        "roundAverages": [86.25, 85.66666666666667, 84.5],
+        "roundRanks": [4, 6, 7],
+        "total": 256.4166666666667,
+        "rank": 6,
+        "setAside": []
+      },
+      {
+        "id": "d-26",
+        "mean": 66.55555555555556,
+        "sd": 3.811532208676424,
+        "upper": 74.17861997290841,
+        "lower": 58.93249113820271,
+        "roundAverages": [66, 67.66666666666667, 66],
+        "roundRanks": [36, 37, 37],
+        "total": 199.66666666666669,
+        "rank": 37,
+        "setAside": []
+      },
+      {
+        "id": "d-27",
+        "mean": 80.375,
+        "sd": 1.9955307206712847,
+        "upper": 84.36606144134257,
+        "lower": 76.38393855865743,
+        "roundAverages": [80.33333333333333, 78.5, 81.66666666666667],
+        "roundRanks": [13, 17, 11],
+        "total": 240.5,
+        "rank": 15,
+        "setAside": []
+      },
+      {
+        "id": "d-28",
+        "mean": 72.25,
+        "sd": 3.8452196667699345,
+        "upper": 79.94043933353987,
+        "lower": 64.55956066646013,
+        "roundAverages": [72.66666666666667, 70.5, 73],
+        "roundRanks": [30, 32, 29],
+        "total": 216.16666666666669,
+        "rank": 31,
+        "setAside": []
+      },
+      {
+        "id": "d-29",
+        "mean": 66.36363636363636,
+        "sd": 3.854159500402838,
+        "upper": 74.07195536444203,
+        "lower": 58.65531736283069,
+        "roundAverages": [65.6, 69.66666666666667, 64.33333333333333],
+        "roundRanks": [37, 35, 39],
+        "total": 199.59999999999997,
+        "rank": 38,
+        "setAside": []
+      },
+      {
+        "id": "d-30",
+        "mean": 87.81818181818181,
+        "sd": 3.1565228279922772,
+        "upper": 94.13122747416637,
+        "lower": 81.50513616219726,
+        "roundAverages": [86, 88.5, 88],
+        "roundRanks": [5, 2, 3],
+        "total": 262.5,
+        "rank": 3,
+        "setAside": [
+          {
+            "round": 2,
+            "judgeId": "judge-08",
+            "value": 95
+          }
+        ]
+      },
+      {
+        "id": "d-31",
+        "mean": 82.07692307692308,
+        "sd": 3.226492896359205,
+        "upper": 88.52990886964149,
+        "lower": 75.62393728420467,
+        "roundAverages": [80.4, 83.6, 82.33333333333333],
+        "roundRanks": [11, 7, 9],
+        "total": 246.33333333333331,
+        "rank": 9,
+        "setAside": []
+      },
+      {
+        "id": "d-32",
+        "mean": 81.3076923076923,
+        "sd": 2.897832965758361,
+        "upper": 87.10335823920903,
+        "lower": 75.51202637617558,
+        "roundAverages": [80.4, 82.4, 81],
+        "roundRanks": [11, 9, 13],
+        "total": 243.8,
+        "rank": 11,
+        "setAside": []
+      },
+      {
+        "id": "d-33",
+        "mean": 76.25,
+        "sd": 10.990255424043351,
+        "upper": 98.23051084808671,
+        "lower": 54.2694891519133,
+        "roundAverages": [73, 70, 74],
+        "roundRanks": [29, 34, 25],
+        "total": 217,
+        "rank": 30,
+        "setAside": [
+          {
+            "round": 3,
+            "judgeId": "judge-07",
+            "value": 103
+          }
+        ]
+      },
+      {
+        "id": "d-34",
+        "mean": 87,
+        "sd": 2.9277002188455996,
+        "upper": 92.8554004376912,
+        "lower": 81.1445995623088,
+        "roundAverages": [87, 88, 89],
+        "roundRanks": [2, 3, 1],
+        "total": 264,
+        "rank": 1,
+        "setAside": [
+          {
+            "round": 3,
+            "judgeId": "judge-06",
+            "value": 81
+          }
+        ]
+      },
+      {
+        "id": "d-35",
+        "mean": 65.5,
+        "sd": 3.8369548110737792,
+        "upper": 73.17390962214756,
+        "lower": 57.82609037785244,
+        "roundAverages": [65.4, 65.33333333333333, 66],
+        "roundRanks": [38, 38, 37],
+        "total": 196.73333333333335,
+        "rank": 39,
+        "setAside": []
+      },
+      {
+        "id": "d-36",
+        "mean": 73.8,
+        "sd": 2.1499353995462798,
+        "upper": 78.09987079909256,
+        "lower": 69.50012920090744,
+        "roundAverages": [74, 73, 74.5],
+        "roundRanks": [28, 25, 24],
+        "total": 221.5,
+        "rank": 25,
+        "setAside": []
+      },
+      {
+        "id": "d-37",
+        "mean": 79.18181818181819,
+        "sd": 2.7502066038093145,
+        "upper": 84.68223138943682,
+        "lower": 73.68140497419955,
+        "roundAverages": [79.4, 76.5, 78.66666666666667],
+        "roundRanks": [17, 20, 18],
+        "total": 234.56666666666666,
+        "rank": 18,
+        "setAside": [
+          {
+            "round": 2,
+            "judgeId": "judge-08",
+            "value": 85
+          }
+        ]
+      },
+      {
+        "id": "d-38",
+        "mean": 80,
+        "sd": 3.40587727318528,
+        "upper": 86.81175454637057,
+        "lower": 73.18824545362943,
+        "roundAverages": [79.6, 82.33333333333333, 81.5],
+        "roundRanks": [16, 10, 12],
+        "total": 243.43333333333334,
+        "rank": 12,
+        "setAside": [
+          {
+            "round": 3,
+            "judgeId": "judge-06",
+            "value": 72
+          }
+        ]
+      },
+      {
+        "id": "d-39",
+        "mean": 83,
+        "sd": 14.45683229480096,
+        "upper": 111.91366458960192,
+        "lower": 54.08633541039808,
+        "roundAverages": [87, 87.4, 87.5],
+        "roundRanks": [2, 4, 4],
+        "total": 261.9,
+        "rank": 4,
+        "setAside": [
+          {
+            "round": 3,
+            "judgeId": "judge-08",
+            "value": 40
+          }
+        ]
+      },
+      {
+        "id": "d-40",
+        "mean": 73.36363636363636,
+        "sd": 2.693426341028366,
+        "upper": 78.75048904569309,
+        "lower": 67.97678368157963,
+        "roundAverages": [72.66666666666667, 72.4, 73.5],
+        "roundRanks": [30, 27, 27],
+        "total": 218.56666666666666,
+        "rank": 28,
+        "setAside": [
+          {
+            "round": 3,
+            "judgeId": "judge-05",
+            "value": 80
+          }
+        ]
+      }
+    ],
+    "teams": [
+      {
+        "id": "team-01",
+        "roundTeamScores": [152, 154, 155],
+        "roundTeamRanks": [11, 11, 10],
+        "total": 461,
+        "rank": 11
+      },
+      {
+        "id": "team-02",
+        "roundTeamScores": [160.66666666666666, 161, 162.8],
+        "roundTeamRanks": [4, 2, 5],
+        "total": 484.4666666666667,
+        "rank": 4
+      },
+      {
+        "id": "team-03",
+        "roundTeamScores": [155.08333333333331, 160, 159.5],
+        "roundTeamRanks": [8, 4, 8],
+        "total": 474.58333333333337,
+        "rank": 8
+      },
+      {
+        "id": "team-04",
+        "roundTeamScores": [136.2, 138.66666666666666, 126],
+        "roundTeamRanks": [20, 19, 20],
+        "total": 400.8666666666667,
+        "rank": 20
+      },
+      {
+        "id": "team-05",
+        "roundTeamScores": [148, 148.33333333333331, 143.66666666666669],
+        "roundTeamRanks": [16, 15, 18],
+        "total": 440,
+        "rank": 16
+      },
+      {
+        "id": "team-06",
+        "roundTeamScores": [166, 160.5, 164.5],
+        "roundTeamRanks": [1, 3, 2],
+        "total": 491,
+        "rank": 2
+      },
+      {
+        "id": "team-07",
+        "roundTeamScores": [164, 159.33333333333334, 169],
+        "roundTeamRanks": [2, 6, 1],
+        "total": 492.33333333333337,
+        "rank": 1
+      },
+      {
+        "id": "team-08",
+        "roundTeamScores": [152, 145.66666666666669, 147.33333333333334],
+        "roundTeamRanks": [11, 16, 15],
+        "total": 445.00000000000006,
+        "rank": 15
+      },
+      {
+        "id": "team-09",
+        "roundTeamScores": [150.5, 158, 156.4],
+        "roundTeamRanks": [14, 9, 9],
+        "total": 464.9,
+        "rank": 9
+      },
+      {
+        "id": "team-10",
+        "roundTeamScores": [148, 149.66666666666666, 152],
+        "roundTeamRanks": [16, 13, 13],
+        "total": 449.66666666666663,
+        "rank": 14
+      },
+      {
+        "id": "team-11",
+        "roundTeamScores": [148.9, 145, 146],
+        "roundTeamRanks": [15, 17, 17],
+        "total": 439.9,
+        "rank": 17
+      },
+      {
+        "id": "team-12",
+        "roundTeamScores": [145, 144.65, 146.4],
+        "roundTeamRanks": [18, 18, 16],
+        "total": 436.05,
+        "rank": 18
+      },
+      {
+        "id": "team-13",
+        "roundTeamScores": [152.25, 153.33333333333334, 150.5],
+        "roundTeamRanks": [10, 12, 14],
+        "total": 456.08333333333337,
+        "rank": 13
+      },
+      {
+        "id": "team-14",
+        "roundTeamScores": [153, 149, 154.66666666666669],
+        "roundTeamRanks": [9, 14, 11],
+        "total": 456.6666666666667,
+        "rank": 12
+      },
+      {
+        "id": "team-15",
+        "roundTeamScores": [151.6, 158.16666666666669, 152.33333333333331],
+        "roundTeamRanks": [13, 8, 12],
+        "total": 462.09999999999997,
+        "rank": 10
+      },
+      {
+        "id": "team-16",
+        "roundTeamScores": [160.8, 166, 163.33333333333331],
+        "roundTeamRanks": [3, 1, 3],
+        "total": 490.1333333333333,
+        "rank": 3
+      },
+      {
+        "id": "team-17",
+        "roundTeamScores": [160, 158, 163],
+        "roundTeamRanks": [5, 9, 4],
+        "total": 481,
+        "rank": 5
+      },
+      {
+        "id": "team-18",
+        "roundTeamScores": [139.4, 138.33333333333331, 140.5],
+        "roundTeamRanks": [19, 20, 19],
+        "total": 418.23333333333335,
+        "rank": 19
+      },
+      {
+        "id": "team-19",
+        "roundTeamScores": [159, 158.83333333333331, 160.16666666666669],
+        "roundTeamRanks": [7, 7, 7],
+        "total": 478,
+        "rank": 7
+      },
+      {
+        "id": "team-20",
+        "roundTeamScores": [159.66666666666669, 159.8, 161],
+        "roundTeamRanks": [6, 5, 6],
+        "total": 480.46666666666664,
+        "rank": 6
+      }
+    ]
+  }
+}

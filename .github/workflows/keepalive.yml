@@ -1,0 +1,37 @@
+# Keeps the free-tier database awake on tournament days.
+#
+# Neon suspends an idle compute after about five minutes and the first
+# request afterwards takes a few seconds. This workflow pings
+# /api/health/db every five minutes, but only while the repository
+# variable KEEPALIVE is "1". Set it the morning of the tournament and
+# back to "0" afterwards; GitHub bills Actions minutes for every run.
+#
+# GitHub may delay scheduled runs by several minutes under load, so this is
+# a helper, not a guarantee. Keeping the organiser dashboard open (it polls)
+# is the reliable way to keep the database warm.
+
+name: Keepalive
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    name: Ping /api/health/db
+    if: vars.KEEPALIVE == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Ping
+        env:
+          APP_URL: ${{ vars.APP_URL }}
+        run: |
+          if [ -z "$APP_URL" ]; then
+            echo "Set the repository variable APP_URL (for example https://dais.example.org)."
+            exit 1
+          fi
+          curl -fsS --max-time 30 "${APP_URL%/}/api/health/db"

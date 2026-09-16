@@ -1,0 +1,46 @@
+name: Tournament day report
+description: Tell us how Dais behaved at a real event, good or bad.
+labels: [tournament-day]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        These reports shape the roadmap more than anything else. No real names or scores, please.
+  - type: input
+    id: shape
+    attributes:
+      label: Tournament shape
+      placeholder: 2 divisions, 20 teams, 10 rooms, 3 rounds, 2 judges per room
+    validations:
+      required: true
+  - type: dropdown
+    id: hosting
+    attributes:
+      label: Hosting
+      options:
+        - Vercel + Neon
+        - Docker on a laptop at the venue
+        - Docker on a server
+        - Other
+  - type: textarea
+    id: went-well
+    attributes:
+      label: What went well
+    validations:
+      required: true
+  - type: textarea
+    id: even-better-if
+    attributes:
+      label: Even better if
+    validations:
+      required: true
+  - type: textarea
+    id: wifi
+    attributes:
+      label: Connectivity
+      description: Did judges lose signal? Did sheets wait to send? Did the hand-off QR get used?
+  - type: textarea
+    id: paper
+    attributes:
+      label: Paper fallbacks
+      description: How many sheets were typed in from paper, and why?
