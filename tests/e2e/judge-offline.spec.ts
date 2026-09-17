@@ -2,6 +2,40 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { judgeFixture } from "../unit/judge/fixtures";
 
+test("offline cache recognises Vercel deployment tags on immutable assets", async ({
+  page,
+  context,
+}, testInfo) => {
+  test.skip(testInfo.project.name !== "judge", "Mobile judge project only");
+  await context.route("**/api/**", (route) =>
+    route.fulfill({
+      json: { ok: true, data: judgeFixture() },
+      headers: { "X-Dais": "1" },
+    }),
+  );
+  await page.goto("/j/");
+  await expect(page.getByText("Ready to work without signal", { exact: true })).toBeVisible({
+    timeout: 30000,
+  });
+  const asset = await page.evaluate(() => {
+    const script = Array.from(document.scripts).find((script) =>
+      script.src.includes("/_next/static/"),
+    )!;
+    const url = new URL(script.src);
+    url.searchParams.set("dpl", "dpl_offline_regression");
+    return url.toString();
+  });
+  await context.setOffline(true);
+  const available = await page.evaluate(async (url) => {
+    try {
+      return (await fetch(url, { cache: "no-store" })).ok;
+    } catch {
+      return false;
+    }
+  }, asset);
+  expect(available).toBe(true);
+});
+
 test("judge shell reopens offline, autosaves all speakers, queues once and recovers a receipt", async ({
   page,
   context,

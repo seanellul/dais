@@ -66,7 +66,7 @@ export function useJudgePwa() {
     },
     activate() {
       if (!waiting) return;
-      navigator.serviceWorker.addEventListener("controllerchange", () => location.reload(), {
+      navigator.serviceWorker.addEventListener("controllerchange", () => location.replace("/j/"), {
         once: true,
       });
       waiting.postMessage({ type: "SKIP_WAITING" });

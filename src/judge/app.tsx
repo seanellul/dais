@@ -382,7 +382,7 @@ export function JudgeApp() {
         <Link
           href="/"
           aria-label="Back to Dais home"
-          className="flex min-h-11 flex-col justify-center font-display text-h3"
+          className="flex min-h-11 flex-col justify-center font-display text-h3 text-inherit"
         >
           Dais <span className="text-body-sm font-sans">Judge sheets</span>
         </Link>

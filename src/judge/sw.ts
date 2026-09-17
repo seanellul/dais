@@ -13,7 +13,13 @@ const serwist = new Serwist({
   skipWaiting: false,
   clientsClaim: true,
   navigationPreload: false,
-  precacheOptions: { cleanupOutdatedCaches: true },
+  precacheOptions: {
+    cleanupOutdatedCaches: true,
+    // Vercel appends ?dpl=… to immutable, content-hashed JS/CSS URLs.
+    // Those requests must still match their precached files when offline
+    // or when an older installed version outlives its hosted deployment.
+    ignoreURLParametersMatching: [/^utm_/, /^fbclid$/, /^dpl$/],
+  },
   runtimeCaching: [],
 });
 serwist.registerRoute(
