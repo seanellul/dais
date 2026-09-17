@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowLeft, ChevronRight, HelpCircle, Wifi, WifiOff } from "lucide-react";
 import { DEFAULT_SETTINGS } from "@/domain/settings";
 import {
@@ -19,6 +20,7 @@ import type { SheetPayload } from "@/domain/types";
 import type { JudgeAssignment, JudgeBootstrap } from "@/judge/api-types";
 import {
   ActionButton,
+  AppSettings,
   BandBar,
   NumberField,
   OverallField,
@@ -28,7 +30,6 @@ import {
   SideTag,
   StatusChip,
   StickyActionBar,
-  ThemeToggle,
 } from "@/ui";
 import { api, JudgeApiError } from "./api";
 import { encodeHandoff, handoffComments } from "./handoff";
@@ -91,24 +92,36 @@ export function JudgeApp() {
     let disposed = false;
     const db = new JudgeStore();
     store.current = db;
-    const token = new URLSearchParams(location.search).get("token");
-    if (token) history.replaceState(null, "", "/j/");
+    const params = new URLSearchParams(location.search);
+    const token = params.get("t") || params.get("token");
     (async () => {
       const cached = await db.active();
-      if (cached && !disposed) {
+      if (disposed) return;
+      if (cached) {
         setWorkspace(cached);
-        setView("home");
+        if (!token) setView("home");
       }
       try {
-        if (token) await api("/api/judge/join", { token });
+        if (token) {
+          await api("/api/judge/join", { token });
+          if (disposed) return;
+          // Remove the card secret only once its session cookie is established.
+          // A reload during sign-in must be able to retry the same join link.
+          history.replaceState(null, "", "/j/");
+        }
         const bootstrap = await api<JudgeBootstrap>("/api/judge/me");
+        if (disposed) return;
         const downloaded = await db.download(bootstrap);
         if (!disposed) {
           setWorkspace(downloaded);
           setView("home");
         }
       } catch (error) {
-        if (!disposed && error instanceof JudgeApiError && error.error.code !== "unauthenticated")
+        if (
+          !disposed &&
+          error instanceof JudgeApiError &&
+          (token || error.error.code !== "unauthenticated")
+        )
           setNotice(error.message);
       } finally {
         if (!disposed) setLoading(false);
@@ -366,12 +379,44 @@ export function JudgeApp() {
   return (
     <div className="judge-app">
       <header className="judge-topbar">
-        <span className="font-display text-h3">
-          Dais <span className="text-body-sm font-sans">/ judge sheets</span>
-        </span>
-        <button className="judge-icon" aria-label="Help and rubric" onClick={() => go("help")}>
-          <HelpCircle aria-hidden="true" size={22} />
-        </button>
+        <Link
+          href="/"
+          aria-label="Back to Dais home"
+          className="flex min-h-11 flex-col justify-center font-display text-h3"
+        >
+          Dais <span className="text-body-sm font-sans">Judge sheets</span>
+        </Link>
+        <div className="flex items-center gap-1">
+          <button className="judge-icon" aria-label="Help and rubric" onClick={() => go("help")}>
+            <HelpCircle aria-hidden="true" size={22} />
+          </button>
+          <AppSettings className="text-inherit">
+            <InstallHelp pwa={pwa} />
+            {pwa.waiting ? (
+              <div className="space-y-3">
+                <p className="text-body-sm">
+                  An update is available. Send or keep aside waiting sheets before updating.
+                </p>
+                <button
+                  className={quiet}
+                  disabled={
+                    busy || loading || (!!workspace && Object.keys(workspace.outbox).length > 0)
+                  }
+                  onClick={() =>
+                    void perform(async () => {
+                      const latest = await store.current?.active();
+                      if (latest && Object.keys(latest.outbox).length)
+                        throw new Error("Send or keep aside your waiting sheets first.");
+                      pwa.activate();
+                    })
+                  }
+                >
+                  Update app
+                </button>
+              </div>
+            ) : null}
+          </AppSettings>
+        </div>
       </header>
       {workspace ? (
         <div className="judge-connection" role="status">
@@ -418,25 +463,6 @@ export function JudgeApp() {
             onClick={() => setNotice(null)}
           >
             ×
-          </button>
-        </div>
-      ) : null}
-      {pwa.waiting ? (
-        <div className="judge-notice">
-          <p>A new version is ready. Send or keep aside your waiting sheets before updating.</p>
-          <button
-            className={quiet}
-            disabled={!!workspace && Object.keys(workspace.outbox).length > 0}
-            onClick={() =>
-              void perform(async () => {
-                const latest = await store.current?.active();
-                if (latest && Object.keys(latest.outbox).length)
-                  throw new Error("Send or keep aside your waiting sheets first.");
-                pwa.activate();
-              })
-            }
-          >
-            Update app
           </button>
         </div>
       ) : null}
@@ -507,7 +533,15 @@ export function JudgeApp() {
                   Return to sheets saved on this phone
                 </button>
               ) : null}
-              <InstallHelp pwa={pwa} />
+              <section className="judge-panel space-y-3" aria-label="Try Dais">
+                <h2 className="text-h3">Just exploring?</h2>
+                <p className="text-body-sm text-text-secondary">
+                  Try three rounds with fictional teams. No codes or installation needed.
+                </p>
+                <Link className={quiet} href="/demo/judge">
+                  Try a sample room
+                </Link>
+              </section>
             </>,
           )
         : null}
@@ -655,7 +689,6 @@ export function JudgeApp() {
                   Rubric and help
                 </button>
               </div>
-              <InstallHelp pwa={pwa} />
               <button
                 className={quiet}
                 disabled={busy || !online}
@@ -1338,7 +1371,6 @@ export function JudgeApp() {
       ) : null}
       <footer className="judge-footer">
         <span>Your judgement. Safely recorded.</span>
-        <ThemeToggle />
       </footer>
     </div>
   );
@@ -1346,10 +1378,11 @@ export function JudgeApp() {
 function InstallHelp({ pwa }: { pwa: ReturnType<typeof useJudgePwa> }) {
   return (
     <details className="judge-details">
-      <summary>Keep Dais on your home screen</summary>
+      <summary>Add to home screen (optional)</summary>
       <p className="text-body-sm">
-        Install after your sheets finish downloading. Open the installed app once while connected
-        and sign in with your judge codes.
+        Dais works in your browser. If you prefer an app shortcut, install after your sheets finish
+        downloading. Open the installed app while connected, then use your judge codes or choose
+        “Try a sample room”.
       </p>
       {pwa.install ? (
         <button className="judge-button mt-3" onClick={() => void pwa.installApp()}>

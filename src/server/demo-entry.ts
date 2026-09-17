@@ -1,7 +1,7 @@
 import { and, eq, gt, inArray, sql } from "drizzle-orm";
 import { publicPathFor } from "@/domain/public-page";
 import { createUserSession, resolveUserSession } from "@/server/auth/session";
-import { ensureMembership, joinLinkFor, joinTokenFor } from "@/server/auth/tokens";
+import { ensureMembership, issueJoinToken, joinLinkFor, joinTokenFor } from "@/server/auth/tokens";
 import { judges, organisations, tournaments } from "@/server/db";
 import { getEnv } from "@/server/env";
 import { errors } from "@/server/errors";
@@ -86,7 +86,10 @@ export async function startVisitorDemo(
     );
     const judge = graph.judges.find((judge) => judge.id === assignment?.judgeId) ?? graph.judges[0];
     if (!judge) throw errors.notFound("A sample judge");
-    return { location: joinLinkFor(joinTokenFor(judge)), token: issued };
+    // Older demos stored a placeholder hash. Issue the card before returning
+    // its link so those existing visitor sessions can start judging too.
+    const joinToken = await withTransaction(ctx, (tx) => issueJoinToken(tx, ctx, judge.id));
+    return { location: joinLinkFor(joinToken), token: issued };
   }
   return { location: `/t/${existing.slug}`, token: issued };
 }

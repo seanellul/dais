@@ -31,6 +31,7 @@ import {
 } from "@/domain/scoring";
 import { DEFAULT_SETTINGS } from "@/domain/settings";
 import type { Debate, SheetPayload, TournamentSettings } from "@/domain/types";
+import { joinTokenHashFor } from "@/server/auth/tokens";
 import {
   assignments,
   debateJudges,
@@ -63,7 +64,7 @@ import {
   type GraphAssignment,
   type TournamentGraph,
 } from "./graph";
-import { crockfordCode, fingerprintOf, hashToken, newId, randomToken } from "./ids";
+import { crockfordCode, fingerprintOf, newId } from "./ids";
 import {
   assertSimulationAllowed,
   debatesOfRound,
@@ -420,16 +421,20 @@ export async function seedRoster(
   await tx.insert(speakers).values(debaterRows);
   const usedCodes = new Set<string>();
   await tx.insert(judges).values(
-    roster.judges.map((judge) => ({
-      tournamentId,
-      name: judge.name,
-      code: uniqueJudgeCode(usedCodes),
-      joinTokenHash: hashToken(randomToken()),
-      homeRoomId: judge.homeRoomId ? (roomIds.get(judge.homeRoomId) ?? null) : null,
-      status: judge.status,
-      createdAt: now,
-      updatedAt: now,
-    })),
+    roster.judges.map((judge) => {
+      const id = newId();
+      return {
+        id,
+        tournamentId,
+        name: judge.name,
+        code: uniqueJudgeCode(usedCodes),
+        joinTokenHash: joinTokenHashFor({ id, sessionEpoch: 0 }),
+        homeRoomId: judge.homeRoomId ? (roomIds.get(judge.homeRoomId) ?? null) : null,
+        status: judge.status,
+        createdAt: now,
+        updatedAt: now,
+      };
+    }),
   );
 
   const counts: SampleRosterCounts = {

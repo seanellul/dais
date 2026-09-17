@@ -4,8 +4,8 @@ export default function SampleJudge() {
       <p className="mb-4 text-sm uppercase tracking-widest">Try Dais on your phone</p>
       <h1 className="mb-5 text-4xl font-semibold">Judge a sample room</h1>
       <p className="mb-8 text-lg text-muted-foreground">
-        Your private demo has fictional teams and three rounds ready to score. Open a sheet while
-        online, then try scoring without a connection.
+        Your private demo has fictional teams and three rounds ready to score. No codes or
+        installation needed — start judging here in your browser.
       </p>
       <form method="post" action="/demo?mode=judge">
         <button className="min-h-12 rounded-lg bg-primary px-6 py-3 text-primary-foreground">

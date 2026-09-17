@@ -65,7 +65,7 @@ export function SegmentedControl<V extends string>({
           title={option.description}
           aria-description={option.description}
           className={cn(
-            "flex min-w-0 items-center justify-center gap-1.5 rounded-sm px-2 text-body font-medium text-text-secondary transition-colors duration-(--dur-fast) hover:text-text data-checked:bg-primary data-checked:text-on-primary data-disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0",
+            "flex min-w-0 items-center justify-center gap-1.5 rounded-sm px-2 text-body font-medium text-text-secondary transition-colors duration-(--dur-fast) hover:text-text data-checked:bg-primary data-checked:text-on-primary data-checked:hover:text-on-primary data-disabled:opacity-50 [&_svg]:size-4 [&_svg]:shrink-0",
             size === "md" ? "h-12 min-w-12" : "h-11 min-w-11 text-body-sm",
           )}
         >

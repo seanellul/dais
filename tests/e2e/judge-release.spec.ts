@@ -296,14 +296,20 @@ test("waiting app update activates only after reviewed outbox is empty", async (
     });
   });
   await page.goto("/j/");
+  await expect(page.getByRole("button", { name: "Update app", exact: true })).toHaveCount(0);
+  await page.getByRole("button", { name: "Open settings", exact: true }).click();
   await expect(page.getByRole("button", { name: "Update app", exact: true })).toBeEnabled();
+  await page.keyboard.press("Escape");
   await filled(page);
   await page.getByRole("button", { name: "Send to the tournament", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Waiting to send", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Open settings", exact: true }).click();
   await expect(page.getByRole("button", { name: "Update app", exact: true })).toBeDisabled();
   expect(await page.evaluate(() => Reflect.get(window, "daisTestUpdateMessages"))).toEqual([]);
+  await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "Keep aside this local copy", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Copies kept aside", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Open settings", exact: true }).click();
   await expect(page.getByRole("button", { name: "Update app", exact: true })).toBeEnabled();
   await page.getByRole("button", { name: "Update app", exact: true }).click();
   await expect

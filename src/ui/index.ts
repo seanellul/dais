@@ -8,6 +8,7 @@
  */
 
 export { ActionButton, type ActionButtonProps } from "./action-button";
+export { AppSettings, type AppSettingsProps } from "./app-settings";
 export { BandBar, findBand, sortBands, type BandBarProps, type BandMatch } from "./band-bar";
 export { Banner, type BannerKind, type BannerProps } from "./banner";
 export { cn } from "./cn";

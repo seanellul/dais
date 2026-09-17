@@ -25,8 +25,8 @@ async function fixtureFor(
   try {
     fixture = JSON.parse(await readFile(cache, "utf8")) as Fixture;
     await context.addCookies(fixture.storage.cookies);
-    await page.goto(fixture.root);
-    if (!new URL(page.url()).pathname.startsWith("/t/")) fixture = undefined;
+    const response = await page.goto(fixture.root);
+    if (!response?.ok() || !new URL(page.url()).pathname.startsWith("/t/")) fixture = undefined;
   } catch {
     fixture = undefined;
   }
@@ -82,11 +82,11 @@ test("organiser and auth routes are accessible in light, dark and phone layouts"
   async function inspect(target: Page, path: string, variant: string, phone: boolean) {
     await target.goto(path);
     await expect(target.locator("main#main")).toHaveCount(1);
-    // Wait for the remembered mode to hydrate: SSR starts at system, then
-    // the selected radio changes and its colour transition must finish.
+    // Wait for the remembered appearance to hydrate, with controls tucked
+    // inside Settings rather than visible on every page.
     if (path.startsWith("/t")) {
-      const mode = variant === "desktop-dark" ? "Dark" : "Light";
-      await expect(target.getByRole("radio", { name: mode, exact: true })).toBeChecked();
+      const mode = variant === "desktop-dark" ? "dark" : "light";
+      await expect(target.locator("html")).toHaveClass(new RegExp(mode));
     }
     await target.evaluate(async () => {
       await Promise.allSettled(document.getAnimations().map((animation) => animation.finished));
@@ -319,9 +319,12 @@ test("organiser keyboard reaches main and focuses route headings on desktop and 
   const presentation = page.getByRole("button", { name: /Presentation mode/ });
   await page.locator("#page-title").focus();
   await page.keyboard.press("p");
+  await page.getByRole("button", { name: "Open settings", exact: true }).click();
   await expect(presentation).toHaveAttribute("aria-pressed", "true");
+  await page.keyboard.press("Escape");
   await page.getByLabel("Team name", { exact: true }).first().focus();
   await page.keyboard.press("p");
+  await page.getByRole("button", { name: "Open settings", exact: true }).click();
   await expect(presentation).toHaveAttribute("aria-pressed", "true");
   await presentation.click();
   await expect(presentation).toHaveAttribute("aria-pressed", "false");

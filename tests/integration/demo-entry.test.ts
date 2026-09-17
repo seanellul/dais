@@ -2,8 +2,8 @@ import { randomUUID } from "node:crypto";
 import { eq } from "drizzle-orm";
 import { describe, expect, it } from "vitest";
 import { createUserSession, resolveUserSession } from "@/server/auth/session";
-import { createInvite } from "@/server/auth/tokens";
-import { getDb, organisations, tournaments } from "@/server/db";
+import { createInvite, verifyJoinToken } from "@/server/auth/tokens";
+import { getDb, judges, organisations, tournaments } from "@/server/db";
 import { getPublicExample, startVisitorDemo } from "@/server/demo-entry";
 import { publicTournament } from "@/server/public-tournament";
 import { signUpFirstOwner } from "@/server/services/users";
@@ -11,6 +11,24 @@ import { withTransaction } from "@/server/services/context";
 import { seedTournament, testContext } from "./helpers";
 
 describe("public demo isolation", () => {
+  it("issues a valid sample judge link and repairs a reused demo's legacy credential", async () => {
+    const db = await getDb(),
+      ctx = testContext(db);
+    const demo = await startVisitorDemo(ctx, undefined, true);
+    const token = new URL(demo.location).searchParams.get("t")!;
+    const judge = await verifyJoinToken(db, token);
+    expect(judge).not.toBeNull();
+    await db
+      .update(judges)
+      .set({ joinTokenHash: "legacy-demo-placeholder" })
+      .where(eq(judges.id, judge!.id));
+    const reused = await startVisitorDemo(ctx, demo.token, true);
+    expect(reused.token).toBeUndefined();
+    expect(
+      await verifyJoinToken(db, new URL(reused.location).searchParams.get("t")!),
+    ).toMatchObject({ id: judge!.id });
+  });
+
   it("creates an expiring visitor tenancy, reuses it and never grants invites", async () => {
     const db = await getDb(),
       ctx = testContext(db);

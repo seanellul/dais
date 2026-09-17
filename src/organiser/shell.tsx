@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { Route } from "next";
 import { usePathname } from "next/navigation";
 import { signOutAction } from "@/server/actions/auth";
-import { PresentationToggle, ThemeToggle, usePresentationMode } from "@/ui";
+import { AppSettings, PresentationToggle, usePresentationMode } from "@/ui";
 export function OrganiserShell({ name, children }: { name: string; children: React.ReactNode }) {
   const path = usePathname();
   const [, setOn] = usePresentationMode();
@@ -60,8 +60,9 @@ export function OrganiserShell({ name, children }: { name: string; children: Rea
         </Link>
         <div className="org-actions">
           <span className="org-muted">{name}</span>
-          <ThemeToggle />
-          <PresentationToggle />
+          <AppSettings>
+            <PresentationToggle className="w-full justify-start" />
+          </AppSettings>
           <form
             action={async () => {
               await signOutAction();

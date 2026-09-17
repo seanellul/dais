@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { ThemeToggle } from "@/ui/theme-toggle";
+import { AppSettings } from "@/ui";
 
 /** Placeholder until the repository is public. */
 export const GITHUB_URL = "https://github.com/seanellul/dais";
@@ -26,7 +26,7 @@ export function SiteHeader() {
         >
           GitHub
         </a>
-        <ThemeToggle />
+        <AppSettings />
       </nav>
     </header>
   );
