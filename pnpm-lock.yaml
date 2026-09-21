@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@base-ui/react':
         specifier: ^1.8.0
-        version: 1.8.0(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 1.8.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@electric-sql/pglite':
         specifier: ^0.5.8
         version: 0.5.8
@@ -19,13 +19,13 @@ importers:
         version: 2.4.0
       '@react-pdf/renderer':
         specifier: ^4.9.0
-        version: 4.9.0(react@19.2.8)
+        version: 4.9.0(react@19.3.0)
       '@serwist/next':
         specifier: ^9.5.12
-        version: 9.5.12(next@16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)(typescript@5.9.3)
+        version: 9.5.12(next@16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)(typescript@5.9.3)
       '@vercel/functions':
-        specifier: ^3.9.7
-        version: 3.9.7
+        specifier: ^3.9.8
+        version: 3.9.8
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -48,17 +48,17 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       lucide-react:
-        specifier: ^1.46.0
-        version: 1.46.0(react@19.2.8)
+        specifier: ^1.47.0
+        version: 1.47.0(react@19.3.0)
       microdiff:
         specifier: ^1.6.0
         version: 1.6.0
       next:
         specifier: 16.3.5
-        version: 16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       next-themes:
         specifier: ^0.4.6
-        version: 0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 0.4.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       pg:
         specifier: ^8.23.0
         version: 8.23.0
@@ -69,11 +69,11 @@ importers:
         specifier: ^1.5.4
         version: 1.5.4
       react:
-        specifier: 19.2.8
-        version: 19.2.8
+        specifier: 19.3.0
+        version: 19.3.0
       react-dom:
-        specifier: 19.2.8
-        version: 19.2.8(react@19.2.8)
+        specifier: 19.3.0
+        version: 19.3.0(react@19.3.0)
       serwist:
         specifier: ^9.5.12
         version: 9.5.12(browserslist@4.28.6)(typescript@5.9.3)
@@ -82,7 +82,7 @@ importers:
         version: 4.21.0(supports-color@7.2.0)(typescript@5.9.3)
       sonner:
         specifier: ^2.0.8
-        version: 2.0.8(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+        version: 2.0.8(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       tailwind-merge:
         specifier: ^3.7.0
         version: 3.7.0
@@ -1719,15 +1719,15 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@vercel/cli-config@0.2.6':
-    resolution: {integrity: sha512-2AsKCf6gE/Eniq09ARm1RK9rQMV5pcAHU7BFcR9MISO+4/RsjjkaYbQN6G85/xi9pYZ5CJNXvYn4TI6p1jKBcg==}
+  '@vercel/cli-config@0.2.7':
+    resolution: {integrity: sha512-KeSN2HBp8puZrj7kVjSEneDi9yBqW4nAD9AnhGhdYjGNpHl7IkXZVb3HnNe0WWc5+20RlUtmAGWNPQ8qP5QBhQ==}
 
   '@vercel/cli-exec@1.0.1':
     resolution: {integrity: sha512-g9XerViJ/paZujufXYcu5XYI2vU2rtB4sgdpjUHde5RnOkdmpu0ngH46LCFGHoPXO/C+qDPSczIHIRN+8Q2YKQ==}
     engines: {node: '>= 18'}
 
-  '@vercel/functions@3.9.7':
-    resolution: {integrity: sha512-ICLzHbVZs10igkVMW/ovEMIXFa5ctpEjTa+VWRCOQbIqg9ALZcQcRjcfDuQZ/g2XtPS08EvHjzm538YJU9WsXA==}
+  '@vercel/functions@3.9.8':
+    resolution: {integrity: sha512-ISnh/3ACFkWZhtwvRz7H1uG+A/7nr6lY1H9bd7s1SQv9GU0aBpBraI5hnmylUumperdwL+9QGme2s4L06VRw9g==}
     engines: {node: '>= 20'}
     peerDependencies:
       '@aws-sdk/credential-provider-web-identity': '*'
@@ -1738,8 +1738,8 @@ packages:
       ws:
         optional: true
 
-  '@vercel/oidc@3.8.7':
-    resolution: {integrity: sha512-fRu59npOu+1vsV570tiLKskfuRyOJ1MqceAkXbTIfWPnM+c9ve1tSK81oj4umKKirymlGUss3V60Lm5I38rKDw==}
+  '@vercel/oidc@3.8.8':
+    resolution: {integrity: sha512-aeq4/sgVh80zO6j2H+7FRfsG6NOXBrvzV1EEO8IdXPEJgwHIPakP+BFq3QmprsEQ18bIimds07kvaYhm2lehtg==}
     engines: {node: '>= 20'}
 
   '@vitest/coverage-v8@5.0.1':
@@ -3539,8 +3539,8 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@1.46.0:
-    resolution: {integrity: sha512-Bv+FZXgZPrxc/NCl1e7JJVQFLdiCxYgxNVhqoV7X0p6I8ADJo8DxBnK1auH0fZz4AmqOJ3jgneL4f1i8LJQRAA==}
+  lucide-react@1.47.0:
+    resolution: {integrity: sha512-o8C23aXpNQypRY73W7fW02EyvWJinEMXgKeGjFoKym0zj3Q73hD97A1IQps1g8C14HTGsOpZL0Am+xjfgFZAbg==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -4059,16 +4059,16 @@ packages:
     resolution: {integrity: sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==}
     engines: {node: '>= 0.10'}
 
-  react-dom@19.2.8:
-    resolution: {integrity: sha512-rVprimfGBG3DR+Tq0IQG2DT5PxKth1WIGDmj5yPmlzr4YBe7uyE+Du4oVqTDXZSHGGGXRtTJEGSSePyQCMBglQ==}
+  react-dom@19.3.0:
+    resolution: {integrity: sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==}
     peerDependencies:
-      react: ^19.2.8
+      react: ^19.3.0
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react@19.2.8:
-    resolution: {integrity: sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==}
+  react@19.3.0:
+    resolution: {integrity: sha512-E8LUcbtBWt20bbl2YoHfx4ZDBdxVTfOKtCZn9cDSJ4l6/nuoApcpIBcj47t2wZoVX8g2ZHuMHbiShgCR1T5Sog==}
     engines: {node: '>=0.10.0'}
 
   readable-stream@2.3.8:
@@ -4190,8 +4190,8 @@ packages:
   scheduler@0.25.0-rc-603e6108-20241029:
     resolution: {integrity: sha512-pFwF6H1XrSdYYNLfOcGlM28/j8CGLu8IvdrxqhjWULe2bPcKiKW4CV+OWqR/9fT52mywx65l7ysNkjLKBda7eA==}
 
-  scheduler@0.27.0:
-    resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
+  scheduler@0.28.0:
+    resolution: {integrity: sha512-juorfCmIkIw8tT+p5BXSm6PJjQF/ycEYmKyzURCIt/RaZIhL+PulbQ9Yu2z1HdOJDdqDTlxA1+xKBmHXJsczAw==}
 
   secure-json-parse@4.1.0:
     resolution: {integrity: sha512-l4KnYfEyqYJxDwlNVyRfO2E4NTHfMKAWdUuA8J0yve2Dz/E/PdBepY03RvyJpssIpRFwJoCD55wA+mEDs6ByWA==}
@@ -5045,26 +5045,26 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@base-ui/react@1.8.0(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@base-ui/react@1.8.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@babel/runtime': 7.29.7
-      '@base-ui/utils': 0.4.0(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@floating-ui/react-dom': 2.1.9(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@base-ui/utils': 0.4.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@floating-ui/react-dom': 2.1.9(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@floating-ui/utils': 0.2.12
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
-      use-sync-external-store: 1.7.0(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+      use-sync-external-store: 1.7.0(react@19.3.0)
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@base-ui/utils@0.4.0(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@base-ui/utils@0.4.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@babel/runtime': 7.29.7
       '@floating-ui/utils': 0.2.12
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
       reselect: 5.3.0
-      use-sync-external-store: 1.7.0(react@19.2.8)
+      use-sync-external-store: 1.7.0(react@19.3.0)
     optionalDependencies:
       '@types/react': 19.3.0
 
@@ -5427,11 +5427,11 @@ snapshots:
       '@floating-ui/core': 1.8.0
       '@floating-ui/utils': 0.2.12
 
-  '@floating-ui/react-dom@2.1.9(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
+  '@floating-ui/react-dom@2.1.9(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@floating-ui/dom': 1.8.0
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
 
   '@floating-ui/utils@0.2.12': {}
 
@@ -5707,10 +5707,10 @@ snapshots:
 
   '@react-pdf/primitives@4.4.0': {}
 
-  '@react-pdf/reconciler@2.0.0(react@19.2.8)':
+  '@react-pdf/reconciler@2.0.0(react@19.3.0)':
     dependencies:
       object-assign: 4.1.1
-      react: 19.2.8
+      react: 19.3.0
       scheduler: 0.25.0-rc-603e6108-20241029
 
   '@react-pdf/render@4.7.0':
@@ -5726,14 +5726,14 @@ snapshots:
       parse-svg-path: 0.1.2
       svg-arc-to-cubic-bezier: 3.2.0
 
-  '@react-pdf/renderer@4.9.0(react@19.2.8)':
+  '@react-pdf/renderer@4.9.0(react@19.3.0)':
     dependencies:
       '@babel/runtime': 7.29.7
       '@react-pdf/fns': 3.1.3
       '@react-pdf/font': 4.1.2
       '@react-pdf/layout': 5.2.0
       '@react-pdf/primitives': 4.4.0
-      '@react-pdf/reconciler': 2.0.0(react@19.2.8)
+      '@react-pdf/reconciler': 2.0.0(react@19.3.0)
       '@react-pdf/render': 4.7.0
       '@react-pdf/types': 2.14.0
       events: 3.3.0
@@ -5741,7 +5741,7 @@ snapshots:
       pdfkit: 0.20.1
       prop-types: 15.8.1
       queue: 6.0.2
-      react: 19.2.8
+      react: 19.3.0
 
   '@react-pdf/stylesheet@6.3.2':
     dependencies:
@@ -5834,7 +5834,7 @@ snapshots:
     transitivePeerDependencies:
       - browserslist
 
-  '@serwist/next@9.5.12(next@16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react@19.2.8)(typescript@5.9.3)':
+  '@serwist/next@9.5.12(next@16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react@19.3.0)(typescript@5.9.3)':
     dependencies:
       '@serwist/build': 9.5.12(browserslist@4.28.6)(typescript@5.9.3)
       '@serwist/utils': 9.5.12(browserslist@4.28.6)
@@ -5843,8 +5843,8 @@ snapshots:
       browserslist: 4.28.6
       glob: 13.0.6
       kolorist: 1.8.0
-      next: 16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      react: 19.2.8
+      next: 16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      react: 19.3.0
       semver: 7.8.5
       serwist: 9.5.12(browserslist@4.28.6)(typescript@5.9.3)
       zod: 4.4.3
@@ -6165,7 +6165,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.12.2':
     optional: true
 
-  '@vercel/cli-config@0.2.6':
+  '@vercel/cli-config@0.2.7':
     dependencies:
       xdg-app-paths: 5.5.1
       zod: 4.1.11
@@ -6174,13 +6174,13 @@ snapshots:
     dependencies:
       execa: 5.1.1
 
-  '@vercel/functions@3.9.7':
+  '@vercel/functions@3.9.8':
     dependencies:
-      '@vercel/oidc': 3.8.7
+      '@vercel/oidc': 3.8.8
 
-  '@vercel/oidc@3.8.7':
+  '@vercel/oidc@3.8.8':
     dependencies:
-      '@vercel/cli-config': 0.2.6
+      '@vercel/cli-config': 0.2.7
       '@vercel/cli-exec': 1.0.1
       jose: 5.10.0
 
@@ -8053,9 +8053,9 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@1.46.0(react@19.2.8):
+  lucide-react@1.47.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
 
   magic-string@0.30.21:
     dependencies:
@@ -8134,21 +8134,21 @@ snapshots:
     dependencies:
       content-type: 2.1.0
 
-  next-themes@0.4.6(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  next-themes@0.4.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
 
-  next@16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  next@16.3.5(@babel/core@7.29.7(supports-color@7.2.0))(@playwright/test@1.63.0)(@types/node@20.19.43)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
       '@next/env': 16.3.5
       '@swc/helpers': 0.5.23
       baseline-browser-mapping: 2.11.23
       caniuse-lite: 1.0.30001810
       postcss: 8.5.23
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
-      styled-jsx: 5.1.6(@babel/core@7.29.7(supports-color@7.2.0))(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
+      styled-jsx: 5.1.6(@babel/core@7.29.7(supports-color@7.2.0))(react@19.3.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 16.3.5
       '@next/swc-darwin-x64': 16.3.5
@@ -8568,14 +8568,14 @@ snapshots:
       iconv-lite: 0.7.3
       unpipe: 1.0.0
 
-  react-dom@19.2.8(react@19.2.8):
+  react-dom@19.3.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
-      scheduler: 0.27.0
+      react: 19.3.0
+      scheduler: 0.28.0
 
   react-is@16.13.1: {}
 
-  react@19.2.8: {}
+  react@19.3.0: {}
 
   readable-stream@2.3.8:
     dependencies:
@@ -8733,7 +8733,7 @@ snapshots:
 
   scheduler@0.25.0-rc-603e6108-20241029: {}
 
-  scheduler@0.27.0: {}
+  scheduler@0.28.0: {}
 
   secure-json-parse@4.1.0: {}
 
@@ -8931,10 +8931,10 @@ snapshots:
     dependencies:
       atomic-sleep: 1.0.0
 
-  sonner@2.0.8(@types/react@19.3.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8):
+  sonner@2.0.8(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0):
     dependencies:
-      react: 19.2.8
-      react-dom: 19.2.8(react@19.2.8)
+      react: 19.3.0
+      react-dom: 19.3.0(react@19.3.0)
     optionalDependencies:
       '@types/react': 19.3.0
 
@@ -9061,10 +9061,10 @@ snapshots:
 
   strip-json-comments@5.0.3: {}
 
-  styled-jsx@5.1.6(@babel/core@7.29.7(supports-color@7.2.0))(react@19.2.8):
+  styled-jsx@5.1.6(@babel/core@7.29.7(supports-color@7.2.0))(react@19.3.0):
     dependencies:
       client-only: 0.0.1
-      react: 19.2.8
+      react: 19.3.0
     optionalDependencies:
       '@babel/core': 7.29.7(supports-color@7.2.0)
 
@@ -9298,9 +9298,9 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  use-sync-external-store@1.7.0(react@19.2.8):
+  use-sync-external-store@1.7.0(react@19.3.0):
     dependencies:
-      react: 19.2.8
+      react: 19.3.0
 
   util-deprecate@1.0.2: {}
 
